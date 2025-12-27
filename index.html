@@ -3,24 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sagar | 3D Portfolio</title>
+    <title>Sagar | Soft 3D</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="home-mode">
 
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-            }
-        }
-    </script>
-
-    <div id="loader">LOADING 3D WORLD...</div>
-
     <div id="canvas-container"></div>
+
+    <h1 class="hero-logo">SAGAR</h1>
 
     <button id="menu-toggle-btn" class="menu-btn">MENU</button>
 
@@ -42,7 +33,7 @@
             <div class="panel-content soft-card">
                 <h2>THE CREATOR</h2>
                 <p>
-                    I build digital playgrounds. <br>
+                    I design digital playgrounds. <br>
                     <strong>Playful</strong>, <strong>Interactive</strong>, and <strong>Human</strong>.
                 </p>
             </div>
@@ -62,5 +53,10 @@
 
     </main>
 
-    <script src="
-        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script type="module" src="./script.js"></script>
+</body>
+</html>
