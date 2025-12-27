@@ -3,22 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sagar | Home</title>
+    <title>Sagar | Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="page-home">
+<body class="home-mode">
 
     <div id="canvas-container"></div>
 
-    <main class="hero">
-        <h1 class="hero-title">SAGAR<span class="dot">.</span></h1>
-        <p class="hero-subtitle">Digital Creator & Visual Artist</p>
-        
-        <div class="nav-container">
-            <a href="blogs.html" class="nav-btn">READ BLOGS</a>
-            <a href="photography.html" class="nav-btn">VIEW PHOTOS</a>
+    <nav class="fixed-nav">
+        <div class="logo">SAGAR<span class="dot">.</span></div>
+        <div class="menu">
+            <a href="blogs.html" class="nav-link">BLOGS</a>
+            <a href="photography.html" class="nav-link">PHOTOS</a>
         </div>
+    </nav>
+
+    <main class="scroll-container">
+        
+        <section class="panel center" id="hero">
+            <h1 class="glitch-text" data-text="SAGAR">SAGAR</h1>
+            <p class="subtitle">Digital Creator & Visual Artist</p>
+            <div class="scroll-hint">SCROLL FOR INFO ↓</div>
+        </section>
+
+        <section class="panel left" id="about">
+            <div class="panel-content">
+                <h2>WHO AM I?</h2>
+                <p class="bio-text">
+                    I am a creator based in Bengaluru, obsessed with the intersection of 
+                    <strong>Technology</strong> and <strong>Art</strong>. 
+                    <br><br>
+                    My work explores sci-fi narratives, digital aesthetics, and the raw beauty of urban photography.
+                    I build worlds with code and capture moments with light.
+                </p>
+            </div>
+        </section>
+
+        <section class="panel center" id="socials">
+            <h2>CONNECT</h2>
+            <div class="social-grid">
+                <a href="#" class="social-btn">INSTAGRAM</a>
+                <a href="#" class="social-btn">TWITTER</a>
+                <a href="#" class="social-btn">LINKEDIN</a>
+                <a href="#" class="social-btn">YOUTUBE</a>
+            </div>
+        </section>
+
     </main>
+
+    <footer class="matrix-footer">
+        <div class="ticker-wrap">
+            <div class="ticker-move" id="matrix-text">
+                </div>
+        </div>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
