@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visuals // Gallery</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Special style for photos on top of the black background */
+        .photo-frame {
+            border: 4px solid var(--retro-green);
+            padding: 10px;
+            background: rgba(0,0,0,0.8);
+            max-width: 80%;
+            transition: transform 0.3s;
+        }
+        .photo-frame:hover { transform: scale(1.02); }
+        img { width: 100%; display: block; filter: grayscale(100%) contrast(1.2); } /* Aesthetic filter */
+        img:hover { filter: none; } /* Color returns on hover */
+    </style>
+</head>
+<body>
+    <canvas id="webgl"></canvas>
+    <main>
+        <section class="panel center">
+            <h1>VISUAL DATA</h1>
+        </section>
+
+        <section class="panel center">
+            <div class="photo-frame">
+                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80" alt="Cyberpunk City">
+            </div>
+            <p>LOCATION: SECTOR 7</p>
+        </section>
+
+        <section class="panel center">
+            <div class="photo-frame">
+                <img src="https://images.unsplash.com/photo-1515630278258-407f66498911?auto=format&fit=crop&w=800&q=80" alt="Neon Lights">
+            </div>
+            <p>SUBJECT: NEON GHOSTS</p>
+        </section>
+
+        <section class="panel center">
+            <a href="index.html" class="lando-btn"><< RETURN HOME</a>
+        </section>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script type="module" src="./script.js"></script>
+</body>
+            </html>
+              
