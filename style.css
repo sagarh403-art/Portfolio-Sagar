@@ -77,3 +77,76 @@ p { font-size: 1.5rem; line-height: 1.6; color: #ccc; }
 .content-item:nth-child(odd) { flex-direction: row; }
 .content-item:nth-child(even) { flex-direction: row-reverse; text-align: right; }
 @media (max-width: 768px) { .content-item:nth-child(odd), .content-item:nth-child(even) { flex-direction: column-reverse; text-align: left; } .hero-logo { font-size: 20vw; } }
+
+/* ... (Keep all your existing CSS) ... */
+
+/* =========================================
+   3D ROTATING SLIDER (PHOTOGRAPHY PAGE ONLY)
+   ========================================= */
+.banner {
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    display: flex; /* Center the slider vertically */
+    justify-content: center;
+    align-items: center;
+}
+
+.slider {
+    position: absolute;
+    width: 200px;
+    height: 250px;
+    top: 35%; /* Adjust vertical position */
+    transform-style: preserve-3d; /* CRITICAL for 3D effect */
+    transform: perspective(1000px);
+    animation: autoRun 20s linear infinite;
+    z-index: 2;
+}
+
+/* ANIMATION: Spin the whole carousel */
+@keyframes autoRun {
+    from { transform: perspective(1000px) rotateX(-10deg) rotateY(0deg); }
+    to { transform: perspective(1000px) rotateX(-10deg) rotateY(360deg); }
+}
+
+.item {
+    position: absolute;
+    inset: 0 0 0 0;
+    transform: 
+        rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg))  
+        translateZ(550px); /* Push them out to form a circle */
+}
+
+.item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 3px solid rgba(255,255,255,0.2);
+    transition: 0.5s;
+    filter: brightness(0.8);
+}
+
+.item:hover img {
+    filter: brightness(1.2);
+    border-color: var(--accent-cyan);
+    transform: scale(1.1);
+    box-shadow: 0 0 30px var(--accent-cyan);
+}
+
+/* MODEL (The Robot/Character in the middle) */
+.model {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px; height: 600px; /* Adjust based on your model image */
+    background-image: url('https://raw.githubusercontent.com/baronwatts/models/master/robot_transparent.png'); /* Placeholder */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 1; /* Behind the front items, but visually in middle */
+    pointer-events: none;
+}
