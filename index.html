@@ -1,32 +1,49 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Portfolio</title>
+    <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <canvas id="webgl"></canvas>
+
     <main>
-    <section class="panel center">
-        <h1>PORTFOLIO</h1>
-        <div class="button-container">
-            <a href="/blogs" class="lando-btn magnetic" data-strength="50">
-                <span class="btn-text">READ BLOGS</span>
-                <div class="btn-fill"></div>
-            </a>
+        
+        <section class="panel center">
+            <h1>SAGAR'S PORTFOLIO</h1>
+            <p>Scroll down to explore.</p>
+        </section>
+        
+        <section class="panel right">
+            <h2>WRITING</h2>
+            <p>Read my latest sci-fi stories and tech blogs.</p>
             
-            <a href="/photography" class="lando-btn magnetic" data-strength="50">
-                <span class="btn-text">PHOTOGRAPHY</span>
-                <div class="btn-fill"></div>
-            </a>
-        </div>
-    </section>
+            <div class="button-container">
+                <a href="/blogs" class="lando-btn magnetic">
+                    <span class="btn-text">READ BLOGS</span>
+                    <div class="btn-fill"></div>
+                </a>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>VISUALS</h2>
+            <p>A collection of moments captured in time.</p>
+
+            <div class="button-container">
+                <a href="/photography" class="lando-btn magnetic">
+                    <span class="btn-text">VIEW GALLERY</span>
+                    <div class="btn-fill"></div>
+                </a>
+            </div>
+        </section>
+
     </main>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script type="module" src="./script.js"></script>
 </body>
 </html>
