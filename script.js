@@ -14,12 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
         robotContainer.appendChild(robRenderer.domElement);
 
         // -- LINE ART HEAD --
-        // We use a basic mesh with wireframe: true for the line-art look
         const headGeo = new THREE.BoxGeometry(1.8, 1.8, 1.8);
         const headMat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true });
         const robotHead = new THREE.Mesh(headGeo, headMat);
         
-        // Eyes (Small filled squares inside)
+        // Eyes
         const eyeGeo = new THREE.PlaneGeometry(0.3, 0.3);
         const eyeMat = new THREE.MeshBasicMaterial({ color: 0x00f3ff, side: THREE.DoubleSide });
         const eye1 = new THREE.Mesh(eyeGeo, eyeMat);
@@ -69,25 +68,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const polygon = new THREE.Mesh(polyGeo, polyMat);
     scene.add(polygon);
 
-    // B. RISING SAND PARTICLES (Bright & Visible)
+    // B. RISING SAND PARTICLES (ADJUSTED LOGIC)
     const sandGeo = new THREE.BufferGeometry();
     const sandCount = 1000;
     const posArray = new Float32Array(sandCount * 3);
-    const speedArray = new Float32Array(sandCount); // Store speed for each particle
+    const speedArray = new Float32Array(sandCount); 
 
     for(let i=0; i<sandCount; i++) {
-        // x, y, z
         posArray[i*3] = (Math.random() - 0.5) * 60;   
         posArray[i*3+1] = (Math.random() - 0.5) * 60; 
         posArray[i*3+2] = (Math.random() - 0.5) * 40; 
-        speedArray[i] = 0.02 + Math.random() * 0.05; // Random upward speed
+        
+        // --- CHANGE 1: SUPER SLOW AMBIENT SPEED ---
+        // Was 0.02, now 0.0005 (Barely moving)
+        speedArray[i] = 0.0005 + Math.random() * 0.001; 
     }
 
     sandGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
     
     const sandMat = new THREE.PointsMaterial({ 
         size: 0.12, 
-        color: 0x00f3ff, // Neon Cyan for high contrast against dark blue
+        color: 0x00f3ff, 
         transparent: true, 
         opacity: 0.8 
     });
@@ -102,22 +103,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 1. Polygon Anim
         polygon.rotation.y += 0.002;
-        polygon.position.y = scrollY * 0.01; // Move up on scroll
-        let newOp = 0.3 - (scrollY * 0.0005); // Fade out
+        polygon.position.y = scrollY * 0.01; 
+        let newOp = 0.3 - (scrollY * 0.0005); 
         polygon.material.opacity = Math.max(0, newOp);
 
-        // 2. Sand Anim (Rise Up)
+        // 2. Sand Anim (Logic Update)
+        
+        // --- CHANGE 2: MOVE WHOLE SYSTEM WITH SCROLL ---
+        // As you scroll down (scrollY increases), the system moves UP (+y)
+        sandSystem.position.y = scrollY * 0.05; 
+
+        // Internal "Very Slow" Drift
         const positions = sandSystem.geometry.attributes.position.array;
         for(let i=0; i<sandCount; i++) {
-            // Update Y position
+            // Add the tiny speed value we set earlier
             positions[i*3+1] += speedArray[i]; 
 
-            // If it goes too high (top of screen is roughly y=20), reset to bottom
-            if(positions[i*3+1] > 20) {
+            // If particle goes too high inside the system, reset to bottom
+            if(positions[i*3+1] > 30) {
                 positions[i*3+1] = -30;
             }
         }
-        sandSystem.geometry.attributes.position.needsUpdate = true; // Tell Three.js to redraw
+        sandSystem.geometry.attributes.position.needsUpdate = true; 
 
         renderer.render(scene, camera);
     };
@@ -181,17 +188,5 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h2 class="item-title">${item.title}</h2>
                         <p>${item.desc}</p>
                     </div>
-                    <div class="content-visual"><img src="${item.img}"></div>
-                </article>`;
-        });
-        document.querySelector('.scroll-container')?.appendChild(contentDiv);
-
-        setTimeout(() => {
-            if(typeof gsap !== 'undefined') {
-                gsap.utils.toArray('.content-item').forEach(item => {
-                    gsap.to(item, { opacity: 1, duration: 1, scrollTrigger: { trigger: item, start: "top 85%" } });
-                });
-            }
-        }, 100);
-    }
-});
+                    <div class
+                    
