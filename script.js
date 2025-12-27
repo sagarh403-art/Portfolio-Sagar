@@ -1,68 +1,65 @@
-// Import Three.js and GSAP directly from the web
-import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
-import { gsap } from 'https://cdn.skypack.dev/gsap';
-
-// 1. SETUP THE SCENE
-const scene = new THREE.Scene();
-
-// 2. SETUP THE CAMERA
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 5;
-
-// 3. SETUP THE RENDERER
-const canvas = document.querySelector('#webgl');
-const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
-
-// 4. ADD A 3D OBJECT (Replacing the Helmet with a Torus Knot for now)
-// Note: To load a real 3D model (GLTF), you need a generic GLTFLoader. 
-// For this code to work instantly, we use a built-in geometry.
-const geometry = new THREE.TorusKnotGeometry(1.2, 0.4, 100, 16);
-const material = new THREE.MeshNormalMaterial({ wireframe: true }); // Wireframe looks "Techy"
-const shape = new THREE.Mesh(geometry, material);
-scene.add(shape);
-
-// 5. LIGHTING (Optional for MeshNormalMaterial, but good practice)
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(ambientLight);
-
-// 6. SCROLL ANIMATION LOGIC
-let scrollY = window.scrollY;
-
-window.addEventListener('scroll', () => {
-    scrollY = window.scrollY;
-    
-    // Rotate the shape based on scroll position
-    // We divide by 500 to slow down the rotation speed
-    const rotationSpeed = scrollY * 0.002;
-    
-    // Apply rotation
-    gsap.to(shape.rotation, {
-        y: rotationSpeed,
-        x: rotationSpeed * 0.5,
-        duration: 0.5 // Smooths out the movement
-    });
-
-    // Move the camera slightly for parallax effect
-    camera.position.y = -scrollY * 0.002;
-});
-
-// 7. RESPONSIVENESS (Fix window resizing)
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-// 8. ANIMATION LOOP
-function animate() {
-    requestAnimationFrame(animate);
-    
-    // Subtle constant rotation so it's never fully static
-    shape.rotation.z += 0.002;
-    
-    renderer.render(scene, camera);
+/* Lando Norris Color Palette */
+:root {
+    --lando-yellow: #D2FF00; /* The signature neon yellow */
+    --lando-black: #111112;
 }
 
-animate();
+.button-container {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* 1. The Button Shell */
+.lando-btn {
+    position: relative;
+    display: inline-block;
+    padding: 1.5rem 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 100px; /* Fully rounded capsule */
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    overflow: hidden; /* Traps the fill animation inside */
+    transition: transform 0.1s linear; /* Smooth movement */
+    z-index: 10;
+    cursor: pointer;
+}
+
+/* 2. The Text (Ensures it stays on top of the color) */
+.btn-text {
+    position: relative;
+    z-index: 2; /* Puts text above the yellow fill */
+    transition: color 0.3s ease;
+}
+
+/* 3. The "Swipe" Fill Effect */
+.btn-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--lando-yellow);
+    z-index: 1; /* Behind the text */
+    
+    /* Start position: Hidden below the button */
+    transform: translateY(100%); 
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1); /* "Expo" ease for snap */
+    border-radius: 50%; /* Makes the fill look like a liquid bubble rising */
+}
+
+/* 4. Hover State Actions */
+.lando-btn:hover .btn-fill {
+    transform: translateY(0); /* Slides up to fill the button */
+    border-radius: 0; /* Squares out to fill corners */
+}
+
+.lando-btn:hover .btn-text {
+    color: var(--lando-black); /* Text turns black for contrast */
+}
+
+.lando-btn:hover {
+    border-color: var(--lando-yellow);
+}
