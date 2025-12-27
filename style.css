@@ -1,62 +1,62 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;700;900&display=swap');
 
 :root {
-    --bg-color: #1a1a2e; /* Deep Space Blue */
+    --bg-color: #1a1a2e;
     --accent-cyan: #00f3ff;
     --accent-pink: #ff007f;
     --text-white: #ffffff;
 }
 
-body {
-    margin: 0; background: var(--bg-color); color: var(--text-white);
-    font-family: 'Outfit', sans-serif; overflow-x: hidden;
-}
+body { margin: 0; background: var(--bg-color); color: var(--text-white); font-family: 'Outfit', sans-serif; overflow-x: hidden; }
 
 #canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; background: radial-gradient(circle at center, #16213e, #0f0f1a); }
 
-/* --- HERO LOGO --- */
+/* HERO LOGO */
 .hero-logo {
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 15vw; font-weight: 900;
-    margin: 0; color: white;
-    z-index: 10; pointer-events: none;
-    display: flex; gap: 10px; /* Space between letters */
-    white-space: nowrap;
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-size: 15vw; font-weight: 900; margin: 0; color: white;
+    z-index: 10; pointer-events: none; display: flex; gap: 10px; white-space: nowrap;
 }
-.letter { display: inline-block; } /* Allows individual animation */
+.letter { display: inline-block; }
 
-/* --- ROBOT MENU BUTTON --- */
+/* ROBOT BUTTON (Container) */
 .robot-btn {
-    position: fixed; top: 30px; right: 30px; 
-    width: 80px; height: 80px;
+    position: fixed; top: 20px; right: 20px;
+    width: 60px; height: 60px; /* Compact */
     cursor: pointer; z-index: 9999;
-    /* We don't need background, the 3D canvas inside will handle it */
     transition: transform 0.3s;
 }
 .robot-btn:hover { transform: scale(1.1); }
 
 /* MENU OVERLAY */
 .menu-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-    background: rgba(26, 26, 46, 0.98);
-    z-index: 9000; display: flex; justify-content: center; align-items: center;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(26, 26, 46, 0.98); z-index: 9000;
+    display: flex; justify-content: center; align-items: center;
     clip-path: circle(0% at 100% 0%); transition: clip-path 0.6s cubic-bezier(0.19, 1, 0.22, 1);
     opacity: 0; pointer-events: none;
 }
 .menu-overlay.active { clip-path: circle(150% at 100% 0%); opacity: 1; pointer-events: all; }
-
 .menu-links { display: flex; flex-direction: column; text-align: center; gap: 20px; }
 .menu-item { font-size: 3.5rem; font-weight: 900; color: white; text-decoration: none; transition: 0.3s; }
 .menu-item:hover { color: var(--accent-cyan); letter-spacing: 5px; }
 
-/* SECTIONS & CARDS */
-.panel { width: 100%; display: flex; justify-content: center; align-items: center; }
+/* SECTIONS (Fixed Overlap) */
+.panel {
+    min-height: 100vh; /* Allow growth if content is tall */
+    width: 100%;
+    display: flex; justify-content: center; align-items: center;
+    padding: 100px 0; /* Add buffer space */
+    box-sizing: border-box;
+}
+.spacer { height: 150vh; } /* Extra scroll space for hero animation */
+
+/* CARDS */
 .soft-card {
     background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px);
     padding: 60px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1);
     box-shadow: 0 20px 40px rgba(0,0,0,0.3); max-width: 600px; text-align: center;
+    margin: 20px; /* Ensure edge spacing */
 }
 h2 { font-size: 3rem; margin-bottom: 20px; background: linear-gradient(to right, #00f3ff, #ff007f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 p { font-size: 1.5rem; line-height: 1.6; color: #ccc; }
