@@ -16,15 +16,15 @@
         <h1 class="main-logo">SAGAR</h1>
     </div>
 
-    <button class="menu-btn" onclick="toggleMenu()">MENU</button>
+    <button id="menu-toggle-btn" class="menu-btn">MENU</button>
 
     <div class="menu-overlay" id="menu-overlay">
         <div class="menu-links">
-            <a href="#" class="menu-item active-link" onclick="closeMenu(); scrollToSection('hero')">HOME</a>
+            <a href="index.html" class="menu-item active-link">HOME</a>
             <a href="blogs.html" class="menu-item">BLOGS</a>
             <a href="photography.html" class="menu-item">PHOTOS</a>
-            <a href="#" class="menu-item" onclick="closeMenu(); scrollToSection('about')">ABOUT</a>
-            <a href="#" class="menu-item" onclick="closeMenu(); scrollToSection('socials')">CONTACT</a>
+            <a href="#about" class="menu-item" id="link-about">ABOUT</a>
+            <a href="#socials" class="menu-item" id="link-socials">CONTACT</a>
         </div>
     </div>
 
@@ -39,5 +39,18 @@
                 <h2>THE ARCHITECT</h2>
                 <p>
                     My work sits in the dark space between <i>design</i> and <i>logic</i>.
-                    <br><br
-                            
+                    <br><br>
+                    I build digital stages where brands perform.
+                </p>
+            </div>
+        </section>
+
+        <section class="panel center" id="socials">
+            <div class="panel-content glass-card">
+                <h2>GET IN TOUCH</h2>
+                <div class="social-grid">
+                    <a href="#" class="social-link">INSTAGRAM</a>
+                    <a href="#" class="social-link">TWITTER</a>
+                    <a href="#" class="social-link">LINKEDIN</a>
+                    <a href="#" class="social-link">EMAIL</a>
+                    
