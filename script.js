@@ -1,166 +1,218 @@
-// --- 1. SETUP & SCENE ---
+// --- 1. EXAMPLE DATA (So you can see the layout) ---
+const portfolioData = [
+    {
+        type: "BLOG",
+        title: "The Architecture of Void",
+        description: "Designing negative space in digital environments.",
+        image: "https://images.unsplash.com/photo-1487621167305-5d248087c724?auto=format&fit=crop&w=800&q=80",
+        fullText: `<p>We often focus on what we build, but the void we leave behind is just as important...</p>`
+    },
+    {
+        type: "PHOTOGRAPHY",
+        title: "Tokyo After Midnight",
+        description: "Street photography series. Fujifilm X-T4.",
+        image: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+        type: "BLOG",
+        title: "Rendering Dreams",
+        description: "Using Three.js to visualize subconscious thoughts.",
+        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
+        fullText: `<p>WebGL allows us to break the laws of physics. Gravity is optional. Light is programmable...</p>`
+    },
+    {
+        type: "PHOTOGRAPHY",
+        title: "Concrete Jungle",
+        description: "Brutalist architecture in India.",
+        image: "https://images.unsplash.com/photo-1486744360400-1b8a11ea8416?auto=format&fit=crop&w=800&q=80"
+    }
+];
+
+// --- 2. THREE.JS SCENE SETUP ---
 const scene = new THREE.Scene();
-// No dark background color - letting CSS radial gradient show through
-// Add fog to blend particles into the orange distance
-scene.fog = new THREE.FogExp2(0xFF9F43, 0.002);
+// Fog matches the dark charcoal background
+scene.fog = new THREE.FogExp2(0x1a1a1a, 0.02);
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.getElementById('canvas-container').appendChild(renderer.domElement);
-camera.position.z = 30;
+const container = document.getElementById('canvas-container');
+if(container) container.appendChild(renderer.domElement);
 
-// --- 2. CREATE DNA HELIX (Procedural) ---
-const dnaGroup = new THREE.Group();
-const particleCount = 60; // How long the DNA is
-const radius = 4;
-const spacing = 1.5;
+camera.position.z = 15;
+camera.position.y = 2;
 
-// Create atoms (Spheres)
-const atomGeo = new THREE.SphereGeometry(0.3, 16, 16);
-const atomMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4 });
-const connectorMat = new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.3, transparent: true });
+// --- 3. CREATE THE "STAGE" ---
+// A cylinder to act as the platform
+const stageGeo = new THREE.CylinderGeometry(8, 8, 0.5, 64);
+const stageMat = new THREE.MeshStandardMaterial({ 
+    color: 0x111111, 
+    roughness: 0.2, 
+    metalness: 0.8 
+});
+const stage = new THREE.Mesh(stageGeo, stageMat);
+stage.position.y = -4; // Sit below the camera
+scene.add(stage);
 
-for (let i = 0; i < particleCount; i++) {
-    const angle = i * 0.5;
-    const y = (i * spacing) - (particleCount * spacing / 2);
+// Spotlights to light up the stage
+const spotLight = new THREE.SpotLight(0xffffff, 10);
+spotLight.position.set(0, 15, 0);
+spotLight.angle = Math.PI / 6;
+spotLight.penumbra = 0.5;
+scene.add(spotLight);
 
-    // Strand 1
-    const x1 = Math.cos(angle) * radius;
-    const z1 = Math.sin(angle) * radius;
-    const atom1 = new THREE.Mesh(atomGeo, atomMat);
-    atom1.position.set(x1, y, z1);
-    
-    // Strand 2 (Opposite side)
-    const x2 = Math.cos(angle + Math.PI) * radius;
-    const z2 = Math.sin(angle + Math.PI) * radius;
-    const atom2 = new THREE.Mesh(atomGeo, atomMat);
-    atom2.position.set(x2, y, z2);
+const blueLight = new THREE.PointLight(0x4444ff, 2, 20);
+blueLight.position.set(-5, 2, 5);
+scene.add(blueLight);
 
-    // Connector (The bond between strands)
-    // We create a cylinder between the two atoms
-    const dist = radius * 2;
-    const connectorGeo = new THREE.CylinderGeometry(0.05, 0.05, dist, 8);
-    const connector = new THREE.Mesh(connectorGeo, connectorMat);
-    
-    // Math to position and rotate the connector correctly
-    connector.position.set(0, y, 0);
-    connector.rotation.y = -angle; // Rotate to match helix
-    connector.rotation.z = Math.PI / 2; // Lay flat
-
-    dnaGroup.add(atom1);
-    dnaGroup.add(atom2);
-    dnaGroup.add(connector);
-}
-
-// Rotate the whole DNA so it looks diagonal/interesting
-dnaGroup.rotation.z = Math.PI / 6; 
-scene.add(dnaGroup);
-
-// --- 3. CREATE SAND PARTICLES ---
+// --- 4. LARGER SAND PARTICLES ---
 const sandGeo = new THREE.BufferGeometry();
-const sandCount = 1500;
+const sandCount = 800; // Fewer particles, but bigger
 const posArray = new Float32Array(sandCount * 3);
 
 for(let i = 0; i < sandCount * 3; i++) {
-    // Spread particles wide
-    posArray[i] = (Math.random() - 0.5) * 100;
+    posArray[i] = (Math.random() - 0.5) * 40; // Spread
 }
 
 sandGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 const sandMat = new THREE.PointsMaterial({
-    size: 0.15,
-    color: 0xffddaa, // Light sand color
+    size: 0.15, // BIGGER SIZE
+    color: 0xaaaaaa, // Greyish dust
     transparent: true,
-    opacity: 0.8
+    opacity: 0.6
 });
 
 const sandSystem = new THREE.Points(sandGeo, sandMat);
 scene.add(sandSystem);
 
-// Lights
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-scene.add(ambientLight);
-const pointLight = new THREE.PointLight(0xffffff, 1);
-pointLight.position.set(10, 10, 10);
-scene.add(pointLight);
-
-// --- 4. ANIMATION LOOP ---
+// --- 5. ANIMATION LOOP ---
 let scrollY = 0;
+let mouseX = 0;
+let mouseY = 0;
 
 function animate() {
     requestAnimationFrame(animate);
 
-    // Rotate DNA constantly
-    dnaGroup.rotation.y += 0.005;
+    // Rotate stage slowly
+    stage.rotation.y += 0.001;
 
-    // Sand Movement (The "Moving Up" effect)
-    // We move particles UP (+) based on their Y position relative to scroll
-    sandSystem.rotation.y = scrollY * 0.0002; // Slight twist
-    sandSystem.position.y = scrollY * 0.02; // Move entire system up as you scroll down
-    
+    // Move Sand UP (+y) based on scroll
+    // Also add a gentle "float" animation
+    const time = Date.now() * 0.0005;
+    sandSystem.position.y = (scrollY * 0.01) + Math.sin(time) * 0.5;
+    sandSystem.rotation.y = scrollY * 0.0001;
+
+    // Camera Sway (Parallax)
+    camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.05;
+    camera.position.y += (2 + mouseY * 0.5 - camera.position.y) * 0.05;
+    camera.lookAt(0, 0, 0);
+
     renderer.render(scene, camera);
 }
 animate();
 
-// --- 5. LOGO & SCROLL LOGIC (GSAP) ---
-gsap.registerPlugin(ScrollTrigger);
+// --- 6. SCROLL & LOGO ANIMATION (GSAP) ---
+// This handles shrinking the "SAGAR" text to the top-left
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
 
-// Animate Logo: Center (Big) -> Top Left (Small)
-gsap.to(".logo-container", {
-    top: "30px",
-    left: "40px",
-    xPercent: 0, 
-    yPercent: 0,
-    scale: 0.3, // Shrink to 30% size
-    transformOrigin: "top left", // Shrink towards corner
-    scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "200px top", // Animation finishes after scrolling 200px
-        scrub: 1 // Smoothly ties animation to scrollbar
+    gsap.to(".logo-container", {
+        top: "40px",
+        left: "50px",
+        xPercent: 0, 
+        yPercent: 0,
+        scale: 0.25, // Shrink to 25%
+        transformOrigin: "top left",
+        scrollTrigger: {
+            trigger: "body",
+            start: "top top",
+            end: "300px top",
+            scrub: 1.5 // Slower scrub for smoothness
+        }
+    });
+}
+
+// --- 7. MENU LOGIC (STRIKETHROUGH) ---
+window.toggleMenu = function() {
+    document.getElementById('menu-overlay').classList.toggle('active');
+}
+window.closeMenu = function() {
+    document.getElementById('menu-overlay').classList.remove('active');
+}
+window.scrollToSection = function(id) {
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Auto-Strikethrough Logic
+function setActiveMenu() {
+    const path = window.location.pathname;
+    const links = document.querySelectorAll('.menu-item');
+    
+    links.forEach(link => {
+        link.classList.remove('active-link');
+        
+        // Check URL for Blogs/Photos
+        if (path.includes("blogs.html") && link.innerText === "BLOGS") {
+            link.classList.add('active-link');
+        }
+        else if (path.includes("photography.html") && link.innerText === "PHOTOS") {
+            link.classList.add('active-link');
+        }
+    });
+
+    // If on home page, default to HOME
+    if (!path.includes("html") || path.endsWith("index.html") || path === "/") {
+        links[0].classList.add('active-link');
     }
-});
+}
+setActiveMenu(); // Run on load
 
-// Update Scroll Variable for Three.js
-window.addEventListener('scroll', () => {
-    scrollY = window.scrollY;
-});
+// --- 8. RENDER BLOGS/PHOTOS CONTENT ---
+// This part populates the 'blogs.html' and 'photography.html' pages
+const feedContainer = document.getElementById('content-feed');
+if (feedContainer) {
+    let pageType = "";
+    const path = window.location.pathname;
+    if (path.includes("blogs.html")) pageType = "BLOG";
+    if (path.includes("photography.html")) pageType = "PHOTOGRAPHY";
 
-// Handle Resize
+    const items = portfolioData.filter(item => item.type === pageType);
+
+    items.forEach(item => {
+        const article = document.createElement('article');
+        article.className = 'content-item';
+        article.innerHTML = `
+            <div class="content-text">
+                <span style="color:var(--accent-color); font-weight:bold;">0${Math.floor(Math.random()*9)}</span>
+                <h2 class="item-title">${item.title}</h2>
+                <p class="item-desc">${item.description}</p>
+            </div>
+            <div class="content-visual">
+                <img src="${item.image}" alt="${item.title}" class="content-img">
+            </div>
+        `;
+        feedContainer.appendChild(article);
+    });
+    
+    // Zig Zag Animation
+    gsap.utils.toArray('.content-item').forEach(item => {
+        gsap.to(item, {
+            opacity: 1, y: 0, duration: 1, 
+            scrollTrigger: { trigger: item, start: "top 80%" }
+        });
+    });
+}
+
+// Listeners
+window.addEventListener('scroll', () => scrollY = window.scrollY);
+window.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+    mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+});
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
-
-// --- 6. MENU LOGIC ---
-window.toggleMenu = function() {
-    const overlay = document.getElementById('menu-overlay');
-    const btn = document.querySelector('.menu-btn');
-    overlay.classList.toggle('active');
-    
-    if(overlay.classList.contains('active')) {
-        btn.innerText = "CLOSE";
-        btn.style.color = "white";
-        btn.style.borderColor = "white";
-    } else {
-        btn.innerText = "MENU";
-        btn.style.color = "#2d2d2d";
-        btn.style.borderColor = "#2d2d2d";
-    }
-}
-
-window.closeMenu = function() {
-    document.getElementById('menu-overlay').classList.remove('active');
-    const btn = document.querySelector('.menu-btn');
-    btn.innerText = "MENU";
-    btn.style.color = "#2d2d2d";
-    btn.style.borderColor = "#2d2d2d";
-}
-
-window.scrollToSection = function(id) {
-    const el = document.getElementById(id);
-    if(el) el.scrollIntoView({ behavior: 'smooth' });
-}
