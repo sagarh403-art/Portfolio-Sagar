@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* The 3D Canvas stays fixed in the background */
+#webgl {
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+    z-index: -1; /* Puts it behind the text */
+}
+
+/* Sections for scrolling */
+.panel {
+    height: 100vh; /* Each section is full screen */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 10%;
+    pointer-events: none; /* Lets you click through to the 3D if needed */
+}
+
+h1 { font-size: 5rem; text-transform: uppercase; margin: 0; }
+h2 { font-size: 3rem; text-transform: uppercase; color: #d1fd00; /* Lando Yellow */ }
+p { font-size: 1.5rem; max-width: 500px; }
+
+/* Alignment variations */
+.right { align-items: flex-end; text-align: right; }
+.center { align-items: center; text-align: center; }
