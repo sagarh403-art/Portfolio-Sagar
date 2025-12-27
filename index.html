@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sagar | Rain Portfolio</title>
+    <title>Sagar | 3D Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="home-mode">
 
     <audio id="rain-audio" loop>
-        <source src="mixkit-calm-thunderstorm-in-the-jungle-2415.wav" type="audio/wav">
+        <source src="https://assets.mixkit.co/active_storage/sfx/1271/1271-preview.mp3" type="audio/mpeg">
     </audio>
     <button id="sound-toggle" class="sound-btn"><i class="fa-solid fa-volume-xmark"></i></button>
 
@@ -23,7 +23,6 @@
     </div>
 
     <button id="menu-toggle-btn" class="menu-btn">MENU</button>
-
     <div class="menu-overlay" id="menu-overlay">
         <div class="menu-links">
             <a href="index.html" class="menu-item">HOME</a>
@@ -36,16 +35,13 @@
 
     <main class="scroll-container">
         <section class="panel" id="hero">
-            <div class="scroll-hint">SCROLL TO BEGIN</div>
+            <div class="scroll-hint">INTERACT WITH THE WORLD</div>
         </section>
 
         <section class="panel center" id="about">
             <div class="panel-content glass-card">
                 <h2>THE ARCHITECT</h2>
-                <p>
-                    I build digital storms. <br>
-                    My work sits in the dark space between <i>logic</i> and <i>emotion</i>.
-                </p>
+                <p>I build digital stages. <br>Blending <i>logic</i> with <i>atmosphere</i>.</p>
             </div>
         </section>
 
@@ -53,28 +49,19 @@
             <div class="panel-content glass-card">
                 <h2>NETWORK</h2>
                 <div class="social-grid">
-                    <a href="#" class="social-card">
-                        <i class="fa-brands fa-instagram"></i>
-                        <span>Instagram</span>
-                    </a>
-                    <a href="#" class="social-card">
-                        <i class="fa-brands fa-twitter"></i>
-                        <span>Twitter</span>
-                    </a>
-                    <a href="#" class="social-card">
-                        <i class="fa-brands fa-linkedin"></i>
-                        <span>LinkedIn</span>
-                    </a>
-                    <a href="#" class="social-card">
-                        <i class="fa-solid fa-envelope"></i>
-                        <span>Email</span>
-                    </a>
+                    <a href="#" class="social-card"><i class="fa-brands fa-instagram"></i><span>Instagram</span></a>
+                    <a href="#" class="social-card"><i class="fa-brands fa-twitter"></i><span>Twitter</span></a>
+                    <a href="#" class="social-card"><i class="fa-brands fa-linkedin"></i><span>LinkedIn</span></a>
+                    <a href="#" class="social-card"><i class="fa-solid fa-envelope"></i><span>Email</span></a>
                 </div>
             </div>
         </section>
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/FontLoader.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/geometries/TextGeometry.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
