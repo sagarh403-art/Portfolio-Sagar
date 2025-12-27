@@ -1,35 +1,65 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #000;
-    color: white;
-    overflow-x: hidden;
+/* Lando Norris Color Palette */
+:root {
+    --lando-yellow: #D2FF00; /* The signature neon yellow */
+    --lando-black: #111112;
 }
 
-/* The 3D Canvas stays fixed in the background */
-#webgl {
-    position: fixed;
+.button-container {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* 1. The Button Shell */
+.lando-btn {
+    position: relative;
+    display: inline-block;
+    padding: 1.5rem 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 100px; /* Fully rounded capsule */
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    overflow: hidden; /* Traps the fill animation inside */
+    transition: transform 0.1s linear; /* Smooth movement */
+    z-index: 10;
+    cursor: pointer;
+}
+
+/* 2. The Text (Ensures it stays on top of the color) */
+.btn-text {
+    position: relative;
+    z-index: 2; /* Puts text above the yellow fill */
+    transition: color 0.3s ease;
+}
+
+/* 3. The "Swipe" Fill Effect */
+.btn-fill {
+    position: absolute;
     top: 0;
     left: 0;
-    outline: none;
-    z-index: -1; /* Puts it behind the text */
+    width: 100%;
+    height: 100%;
+    background-color: var(--lando-yellow);
+    z-index: 1; /* Behind the text */
+    
+    /* Start position: Hidden below the button */
+    transform: translateY(100%); 
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1); /* "Expo" ease for snap */
+    border-radius: 50%; /* Makes the fill look like a liquid bubble rising */
 }
 
-/* Sections for scrolling */
-.panel {
-    height: 100vh; /* Each section is full screen */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 10%;
-    pointer-events: none; /* Lets you click through to the 3D if needed */
+/* 4. Hover State Actions */
+.lando-btn:hover .btn-fill {
+    transform: translateY(0); /* Slides up to fill the button */
+    border-radius: 0; /* Squares out to fill corners */
 }
 
-h1 { font-size: 5rem; text-transform: uppercase; margin: 0; }
-h2 { font-size: 3rem; text-transform: uppercase; color: #d1fd00; /* Lando Yellow */ }
-p { font-size: 1.5rem; max-width: 500px; }
+.lando-btn:hover .btn-text {
+    color: var(--lando-black); /* Text turns black for contrast */
+}
 
-/* Alignment variations */
-.right { align-items: flex-end; text-align: right; }
-.center { align-items: center; text-align: center; }
+.lando-btn:hover {
+    border-color: var(--lando-yellow);
+}
