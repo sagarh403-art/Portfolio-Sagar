@@ -1,9 +1,10 @@
+/* ... (Keep imports and root variables same as before) ... */
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400&display=swap');
 
 :root {
-    --bg-color: #0a0a0a; /* Deep Rain Dark */
+    --bg-color: #0a0a0a;
     --text-color: #e0e0e0;
-    --accent-color: #4facfe; /* Electric Rain Blue */
+    --accent-color: #4facfe;
 }
 
 body {
@@ -12,93 +13,64 @@ body {
 }
 
 /* 3D CANVAS */
-#canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; background: radial-gradient(circle at center, #1a1a1a, #000000); }
+#canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; background: radial-gradient(circle at bottom, #1a2a3a, #000000); }
 
-/* RAIN DROPLETS ON SCREEN (Hidden by default) */
+/* RAIN DROPLETS ON SCREEN */
 .splash-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-image: url('https://raw.githubusercontent.com/baronwatts/models/master/rain-overlay.png'); /* Transparent texture */
+    background-image: url('https://raw.githubusercontent.com/baronwatts/models/master/rain-overlay.png');
     background-size: cover; opacity: 0; pointer-events: none; z-index: 5;
     mix-blend-mode: overlay; transition: opacity 0.3s;
 }
 
-/* SOUND BUTTON */
+/* --- FIX: SOUND BUTTON MOVED TO BOTTOM LEFT --- */
 .sound-btn {
-    position: fixed; top: 40px; left: 40px; background: none; border: 1px solid rgba(255,255,255,0.3);
-    color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 200;
+    position: fixed; 
+    bottom: 40px; /* Changed from top to bottom */
+    left: 40px; 
+    background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.3);
+    color: white; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; z-index: 200;
     display: flex; justify-content: center; align-items: center; transition: 0.3s;
+    backdrop-filter: blur(5px);
 }
-.sound-btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
+.sound-btn:hover { border-color: var(--accent-color); color: var(--accent-color); background: rgba(255,255,255,0.1); }
 
-/* LOGO (SMALLER SIZE) */
+/* ... (Keep the rest of the CSS exactly the same as before) ... */
+/* LOGO */
 .logo-container {
     position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
     z-index: 100; pointer-events: none; mix-blend-mode: exclusion;
 }
 .main-logo {
-    font-family: 'Syne', sans-serif;
-    font-size: 8vw; /* SMALLER NOW */
+    font-family: 'Syne', sans-serif; font-size: 8vw;
     font-weight: 800; margin: 0; color: white; line-height: 1; letter-spacing: -2px;
 }
-
-/* MENU BUTTON */
-.menu-btn {
-    position: fixed; top: 40px; right: 40px; background: transparent; border: none;
-    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem;
-    color: white; cursor: pointer; z-index: 200; mix-blend-mode: difference;
-}
-.menu-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050505;
-    z-index: 150; display: flex; justify-content: center; align-items: center;
-    clip-path: circle(0% at 100% 0%); transition: clip-path 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-}
+/* MENU & SECTIONS (Keep existing CSS) */
+.menu-btn { position: fixed; top: 40px; right: 40px; background: transparent; border: none; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; color: white; cursor: pointer; z-index: 200; mix-blend-mode: difference; }
+.menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 150; display: flex; justify-content: center; align-items: center; clip-path: circle(0% at 100% 0%); transition: clip-path 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
 .menu-overlay.active { clip-path: circle(150% at 100% 0%); }
 .menu-links { display: flex; flex-direction: column; text-align: center; gap: 15px; }
 .menu-item { font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800; color: #333; text-decoration: none; transition: 0.3s; }
 .menu-item:hover { color: white; }
-
-/* SECTIONS */
 .panel { height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; }
-.glass-card {
-    background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(10px);
-    padding: 50px; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px;
-    max-width: 600px; text-align: center;
-}
+.glass-card { background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(10px); padding: 50px; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; max-width: 600px; text-align: center; }
 h2 { font-family: 'Syne', sans-serif; font-size: 2.5rem; margin-bottom: 20px; font-weight: 700; }
-
-/* NEW SOCIAL CARDS */
 .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
-.social-card {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;
-    color: white; text-decoration: none; transition: 0.3s; border: 1px solid transparent;
-}
+.social-card { display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; color: white; text-decoration: none; transition: 0.3s; border: 1px solid transparent; }
 .social-card i { font-size: 1.5rem; margin-bottom: 10px; color: #888; transition: 0.3s; }
 .social-card span { font-family: 'Syne', sans-serif; font-size: 0.9rem; letter-spacing: 1px; }
-
 .social-card:hover { background: rgba(255,255,255,0.1); border-color: var(--accent-color); transform: translateY(-5px); }
 .social-card:hover i { color: var(--accent-color); }
-
-/* BLOG/PHOTO LAYOUT FIXES */
-.nav-header {
-    position: fixed; top: 0; left: 0; width: 100%;
-    padding: 30px 40px; display: flex; align-items: center; justify-content: flex-start; gap: 20px;
-    z-index: 50; box-sizing: border-box; background: linear-gradient(to bottom, black, transparent);
-}
-.feed-container { 
-    max-width: 1000px; 
-    margin: 180px auto 100px; /* INCREASED MARGIN TO PREVENT OVERLAP */
-    padding: 0 20px; 
-}
+.nav-header { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px; display: flex; align-items: center; justify-content: flex-start; gap: 20px; z-index: 50; box-sizing: border-box; background: linear-gradient(to bottom, black, transparent); }
+.back-btn-large { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: white; text-decoration: none; border: 2px solid white; padding: 10px 25px; border-radius: 50px; transition: 0.3s; background: rgba(0,0,0,0.5); }
+.back-btn-large:hover { background: white; color: black; }
+.feed-container { max-width: 1000px; margin: 180px auto 100px; padding: 0 20px; }
 .content-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 150px; opacity: 0; }
 .content-text { width: 40%; }
 .content-visual { width: 50%; }
 .content-img { width: 100%; border-radius: 4px; filter: grayscale(100%); transition: 0.5s; }
 .content-item:hover .content-img { filter: grayscale(0%); }
-
-@media (max-width: 768px) {
-    .content-item, .content-item:nth-child(even), .content-item:nth-child(odd) { flex-direction: column-reverse; text-align: left; }
-    .content-text, .content-visual { width: 100%; }
-    .main-logo { font-size: 15vw; }
-    .social-grid { grid-template-columns: 1fr; }
-}
+.item-title { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 700; }
+.content-item:nth-child(even) { flex-direction: row; }
+.content-item:nth-child(odd) { flex-direction: row-reverse; text-align: right; }
+@media (max-width: 768px) { .content-item, .content-item:nth-child(even), .content-item:nth-child(odd) { flex-direction: column-reverse; text-align: left; } .content-text, .content-visual { width: 100%; } .main-logo { font-size: 15vw; } .social-grid { grid-template-columns: 1fr; } }
