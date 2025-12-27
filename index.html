@@ -3,66 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sagar | DNA Portfolio</title>
+    <title>Sagar | Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="home-mode">
 
     <div id="canvas-container"></div>
 
     <div class="grain-overlay"></div>
 
     <div class="logo-container">
-        <h1 class="main-logo">SAGAR<span class="dot">.</span></h1>
+        <h1 class="main-logo">SAGAR</h1>
     </div>
 
     <button class="menu-btn" onclick="toggleMenu()">MENU</button>
 
     <div class="menu-overlay" id="menu-overlay">
         <div class="menu-links">
-            <a href="#" onclick="closeMenu(); scrollToSection('hero')">HOME</a>
-            <a href="blogs.html">BLOGS</a>
-            <a href="photography.html">PHOTOS</a>
-            <a href="#" onclick="closeMenu(); scrollToSection('about')">ABOUT</a>
-            <a href="#" onclick="closeMenu(); scrollToSection('socials')">CONTACT</a>
+            <a href="#" class="menu-item active-link" onclick="closeMenu(); scrollToSection('hero')">HOME</a>
+            <a href="blogs.html" class="menu-item">BLOGS</a>
+            <a href="photography.html" class="menu-item">PHOTOS</a>
+            <a href="#" class="menu-item" onclick="closeMenu(); scrollToSection('about')">ABOUT</a>
+            <a href="#" class="menu-item" onclick="closeMenu(); scrollToSection('socials')">CONTACT</a>
         </div>
     </div>
 
     <main class="scroll-container">
         
         <section class="panel" id="hero">
-            <div class="scroll-hint">SCROLL TO EVOLVE ↓</div>
+            <div class="scroll-hint">SCROLL TO BEGIN</div>
         </section>
 
         <section class="panel center" id="about">
             <div class="panel-content glass-card">
-                <h2>THE CODE OF LIFE</h2>
+                <h2>THE ARCHITECT</h2>
                 <p>
-                    Just as DNA holds the instructions for life, I write the code that brings ideas to reality.
-                    <br><br>
-                    I am a <strong>Creative Developer</strong> & <strong>Visual Storyteller</strong>.
-                </p>
-            </div>
-        </section>
-
-        <section class="panel center" id="socials">
-            <div class="panel-content glass-card">
-                <h2>CONNECT</h2>
-                <div class="social-grid">
-                    <a href="#" class="social-link">INSTAGRAM</a>
-                    <a href="#" class="social-link">TWITTER</a>
-                    <a href="#" class="social-link">LINKEDIN</a>
-                    <a href="#" class="social-link">EMAIL</a>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <script type="module" src="./script.js"></script>
-</body>
-</html>
+                    My work sits in the dark space between <i>design</i> and <i>logic</i>.
+                    <br><br
+                            
