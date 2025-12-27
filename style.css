@@ -1,9 +1,8 @@
-/* IMPORT ROUNDED FONT */
+/* ... (Keep your existing fonts and root variables) ... */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;600;700&display=swap');
 
 :root {
-    /* SOFT POP PALETTE */
-    --bg-color: #24243e; /* Deep Indigo */
+    --bg-color: #24243e;
     --accent-coral: #ff6b6b;
     --accent-mint: #4ecdc4;
     --accent-yellow: #ffe66d;
@@ -15,43 +14,54 @@ body {
     font-family: 'Fredoka', sans-serif; overflow-x: hidden;
 }
 
-/* 3D CANVAS */
 #canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; background: radial-gradient(circle at center, #302b63, #0f0c29); }
 
-/* --- THE HERO LOGO (HTML Version) --- */
+/* --- FIXED LOGO STYLES --- */
 .hero-logo {
     position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%); /* Start Dead Center */
-    font-size: 15vw; /* Huge */
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); /* Starts dead center */
+    font-size: 15vw;
     font-weight: 700;
     margin: 0;
     color: white;
     text-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    z-index: 10; /* Above 3D, Below Menu */
-    pointer-events: none; /* Let clicks pass through */
+    z-index: 100; /* HIGH Z-INDEX TO ENSURE VISIBILITY */
+    pointer-events: none;
     line-height: 1;
+    white-space: nowrap; /* Prevents wrapping */
+    transform-origin: center center;
 }
 
-/* ROUNDED MENU BUTTON */
+/* --- FIXED MENU BUTTON --- */
 .menu-btn {
     position: fixed; top: 30px; right: 30px; 
     background: white; color: var(--bg-color);
     padding: 12px 25px; border-radius: 50px; border: none;
     font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1rem;
-    cursor: pointer; z-index: 200; 
+    cursor: pointer; 
+    z-index: 200; /* HIGHEST Z-INDEX */
     box-shadow: 0 10px 20px rgba(0,0,0,0.2); transition: 0.3s;
 }
-.menu-btn:hover { transform: scale(1.1); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
+.menu-btn:hover { transform: scale(1.1); }
 
 /* MENU OVERLAY */
 .menu-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
     background: rgba(36, 36, 62, 0.98);
-    z-index: 150; display: flex; justify-content: center; align-items: center;
-    clip-path: circle(0% at 100% 0%); transition: clip-path 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 150; 
+    display: flex; justify-content: center; align-items: center;
+    clip-path: circle(0% at 100% 0%); /* Hidden by default */
+    transition: clip-path 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    opacity: 0; /* Extra check to hide it */
+    pointer-events: none;
 }
-.menu-overlay.active { clip-path: circle(150% at 100% 0%); }
+.menu-overlay.active { 
+    clip-path: circle(150% at 100% 0%); 
+    opacity: 1;
+    pointer-events: all;
+}
 
 .menu-links { display: flex; flex-direction: column; text-align: center; gap: 20px; }
 .menu-item { font-size: 3.5rem; font-weight: 700; color: white; text-decoration: none; transition: 0.3s; }
@@ -80,45 +90,16 @@ p { font-size: 1.5rem; line-height: 1.6; color: #eee; font-weight: 300; }
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 .social-pill:hover { transform: translateY(-5px) scale(1.1); color: white; }
-.inst:hover { background: var(--accent-coral); }
-.twit:hover { background: #1DA1F2; }
-.link:hover { background: #0077b5; }
-.mail:hover { background: var(--accent-yellow); color: black; }
 
-/* --- ZIG ZAG LAYOUT FOR BLOGS --- */
+/* BLOG STYLES (Zig Zag) */
 .nav-header { position: fixed; top: 0; left: 0; width: 100%; padding: 30px; z-index: 50; }
-.back-btn-round {
-    padding: 10px 30px; border-radius: 50px; background: white; color: var(--bg-color);
-    font-weight: 700; text-decoration: none; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
+.back-btn-round { padding: 10px 30px; border-radius: 50px; background: white; color: var(--bg-color); font-weight: 700; text-decoration: none; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 .feed-container { max-width: 1000px; margin: 150px auto; padding: 20px; }
-
-.content-item {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 120px;
-    gap: 50px;
-    opacity: 0; /* JS handles fade in */
-}
-
-/* IMAGE STYLING */
-.content-visual img {
-    width: 100%; border-radius: 40px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-    border: 4px solid rgba(255,255,255,0.1);
-    transition: 0.5s;
-}
-.content-visual img:hover { transform: scale(1.02); border-color: var(--accent-mint); }
+.content-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 120px; gap: 50px; opacity: 0; }
+.content-visual img { width: 100%; border-radius: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); border: 4px solid rgba(255,255,255,0.1); transition: 0.5s; }
 .content-text { flex: 1; }
 .content-visual { flex: 1; }
 .item-title { font-size: 2.5rem; color: var(--accent-mint); margin-bottom: 15px; font-weight:700; }
-
-/* --- THE ZIG ZAG MAGIC --- */
 .content-item:nth-child(odd) { flex-direction: row; }
 .content-item:nth-child(even) { flex-direction: row-reverse; text-align: right; }
-
-/* MOBILE FIX */
-@media (max-width: 768px) {
-    .content-item:nth-child(odd), .content-item:nth-child(even) { flex-direction: column-reverse; text-align: left; }
-    .hero-logo { font-size: 20vw; }
-}
+@media (max-width: 768px) { .content-item:nth-child(odd), .content-item:nth-child(even) { flex-direction: column-reverse; text-align: left; } .hero-logo { font-size: 20vw; } }
