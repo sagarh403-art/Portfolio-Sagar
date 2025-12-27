@@ -197,11 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(typeof gsap !== 'undefined') {
                 gsap.utils.toArray('.content-item').forEach(item => {
                     gsap.to(item, { opacity: 1, duration: 1, scrollTrigger: { trigger: item, start: "top 85%" } });
-                });
-            }
-        }, 100);
-    }
-});
+
 // ... (Keep the top part of your script: Robot, Polygon, etc.) ...
 
     // ==========================================
