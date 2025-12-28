@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-
+    
     // --- 1. MENU TOGGLE LOGIC ---
     const menuBtn = document.getElementById('menu-toggle-btn');
     const menuOverlay = document.getElementById('menu-overlay');
@@ -43,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // B. Infinite Sand
         const sandGeo = new THREE.BufferGeometry();
-        const sandCount = 1500;
+        const sandCount = 1000;
         const posArray = new Float32Array(sandCount * 3);
         const speedArray = new Float32Array(sandCount); 
 
