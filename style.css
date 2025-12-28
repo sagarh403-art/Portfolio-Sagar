@@ -11,24 +11,26 @@
 
 body { margin: 0; background: var(--bg-color); color: var(--text-cream); font-family: 'Outfit', sans-serif; overflow-x: hidden; }
 
-/* --- 3D CANVAS (Overlay) --- */
+/* --- 3D CANVAS --- */
 #canvas-container { 
     position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
     z-index: 15; 
     pointer-events: none; 
-    mix-blend-mode: overlay; 
+    /* Soft Light blend makes the grid look embedded in the background */
+    mix-blend-mode: hard-light; 
 }
 
+/* Background Vignette */
 body::before {
     content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle at center, #244855, #1a353f);
+    background: radial-gradient(circle at center, #244855 0%, #0d1b21 100%);
     z-index: -1;
 }
 
-/* --- HERO LOGO (Pure JS) --- */
+/* --- HERO LOGO --- */
 .hero-logo {
     position: fixed; 
-    /* Default Center */
+    /* JS will handle positioning, but we set defaults here */
     top: 50%; left: 50%; 
     transform: translate(-50%, -50%);
     font-size: 15vw; font-weight: 900; margin: 0; 
@@ -36,30 +38,12 @@ body::before {
     z-index: 10; 
     pointer-events: none; 
     display: flex; gap: 10px; white-space: nowrap;
-    opacity: 0; 
-    /* Important: No CSS transitions to conflict with GSAP */
-}
-.letter { display: inline-block; }
-
-/* --- PRELOADER --- */
-#preloader { 
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
-    background: var(--bg-color); 
-    z-index: 999999999; 
-    display: flex; justify-content: center; align-items: center; flex-direction: column; 
-    animation: loaderVanish 0.5s ease 3s forwards; 
-    pointer-events: all; 
-}
-@keyframes loaderVanish { 
-    0% { opacity: 1; transform: scale(1); } 
-    100% { opacity: 0; transform: scale(3); visibility: hidden; pointer-events: none; } 
+    opacity: 0; /* JS fades it in */
 }
 
-/* --- MENU BUTTON (Aligned) --- */
+/* --- MENU BUTTON (2 Lines, Aligned) --- */
 .menu-btn { 
-    position: fixed; 
-    top: 40px; /* ALIGNMENT FIXED */
-    right: 40px; 
+    position: fixed; top: 40px; right: 40px; 
     width: 50px; height: 50px;
     background: transparent; border: none; cursor: pointer; 
     z-index: 20000; pointer-events: auto;
@@ -92,16 +76,23 @@ body::before {
 .menu-item { font-size: 3.5rem; font-weight: 900; color: var(--text-cream); text-decoration: none; transition: 0.3s; flex-shrink: 0; display: block; }
 .menu-item:hover { color: var(--accent-orange); letter-spacing: 5px; }
 
-/* --- BACK BUTTON (Aligned with Menu) --- */
-.nav-header { 
-    position: fixed; 
-    top: 40px; /* ALIGNMENT FIXED */
-    left: 40px; 
-    z-index: 50; 
-} 
+/* --- PRELOADER --- */
+#preloader { 
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
+    background: var(--bg-color); z-index: 999999999; 
+    display: flex; justify-content: center; align-items: center; flex-direction: column; 
+    animation: loaderVanish 0.5s ease 3s forwards; pointer-events: all; 
+}
+@keyframes loaderVanish { 
+    0% { opacity: 1; transform: scale(1); } 
+    100% { opacity: 0; transform: scale(3); visibility: hidden; pointer-events: none; } 
+}
+
+/* --- BACK BUTTON --- */
+.nav-header { position: fixed; top: 40px; left: 40px; z-index: 50; } 
 .back-btn-round { padding: 10px 30px; border-radius: 50px; background: var(--text-cream); color: var(--bg-color); font-weight: 700; text-decoration: none; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s; }
 
-/* PIXEL ART & CONTENT STYLES (Unchanged) */
+/* --- PIXEL ART --- */
 .pixel-s { font-family: 'Press Start 2P', cursive; font-size: 150px; color: var(--accent-orange); text-shadow: 5px 5px 0px var(--accent-brown); animation: spinGlitch 0.5s infinite; }
 @keyframes spinGlitch { 0% { transform: skew(0deg); } 20% { transform: skew(-10deg); text-shadow: -5px 5px 0 var(--accent-blue); } 40% { transform: skew(10deg); text-shadow: 5px -5px 0 var(--accent-brown); } 80% { transform: scale(1.1); } 100% { transform: skew(0deg); } }
 .paper-sheet { width: 140px; height: 180px; background: var(--text-cream); box-shadow: 10px 10px 0 var(--accent-brown); position: relative; display: flex; justify-content: center; align-items: center; }
@@ -116,7 +107,7 @@ body::before {
 @keyframes flashFire { 0% { background: #555; box-shadow: none; } 100% { background: white; box-shadow: 0 0 100px 50px white; } }
 @keyframes floatCam { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-/* LAYOUT */
+/* --- LAYOUT --- */
 .panel { width: 100%; display: flex; justify-content: center; align-items: center; padding: 80px 0; box-sizing: border-box; }
 .spacer { height: 140vh; } 
 #about { margin-bottom: 100px; }
@@ -125,7 +116,7 @@ body::before {
 .scroll-container { position: relative; z-index: 5; width: 100%; pointer-events: none; }
 .scroll-container > * { pointer-events: auto; }
 
-/* SLIDER & GRID */
+/* --- SLIDER & GRID --- */
 .banner { width: 100%; height: 100vh; text-align: center; overflow: hidden; position: relative; }
 .slider { position: absolute; width: 200px; height: 250px; top: 40%; left: calc(50% - 100px); transform-style: preserve-3d; transform: perspective(1000px); animation: autoRun 20s linear infinite; z-index: 2; }
 @keyframes autoRun { from { transform: perspective(1000px) rotateX(-10deg) rotateY(0deg); } to { transform: perspective(1000px) rotateX(-10deg) rotateY(360deg); } }
@@ -158,3 +149,4 @@ p { font-size: 1.5rem; line-height: 1.6; color: var(--accent-blue); }
 .content-item:nth-child(odd) { flex-direction: row; }
 .content-item:nth-child(even) { flex-direction: row-reverse; text-align: right; }
 @media (max-width: 768px) { .menu-item { font-size: 2rem; } .hero-logo { font-size: 20vw; } }
+           
