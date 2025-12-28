@@ -1,74 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-    // ==========================================
-    // 0. SMART PRELOADER SYSTEM
-    // ==========================================
-    const path = window.location.pathname;
-    const isBlog = path.includes('blog');
-    const isPhoto = path.includes('photo');
-    const isHome = !isBlog && !isPhoto; // Fallback for index or root
-
-    // Create Preloader Container
-    const preloader = document.createElement('div');
-    preloader.id = 'preloader';
-    document.body.prepend(preloader);
-
-    // 1. INJECT SPECIFIC HTML BASED ON PAGE
-    if (isHome) {
-        // HOME: 8-BIT 'S'
-        preloader.innerHTML = `<div class="pixel-s"></div>`;
-    } else if (isBlog) {
-        // BLOG: PENCIL & PAPER
-        preloader.innerHTML = `
-            <div class="paper-sheet">
-                <div class="blog-text">BLOG</div>
-                <div class="pixel-pencil"></div>
-            </div>`;
-    } else if (isPhoto) {
-        // PHOTO: CAMERA & FLASH
-        const flashOverlay = document.createElement('div');
-        flashOverlay.className = 'flash-overlay';
-        document.body.appendChild(flashOverlay);
-
-        preloader.innerHTML = `
-            <div class="pixel-camera">
-                <div class="flash-bulb"></div>
-                <div class="lens"></div>
-            </div>`;
-    }
-
-    // 2. TIMING & REMOVAL LOGIC
-    const loadTime = 2500; // 2.5s for animation to play out
-
-    setTimeout(() => {
-        // A. Trigger Visual Effects specific to page
-        if (isPhoto) {
-            document.querySelector('.pixel-camera').classList.add('snap');
-            document.querySelector('.flash-overlay').classList.add('snap');
-            setTimeout(() => document.querySelector('.flash-overlay').remove(), 1000);
-        }
-
-        // B. Zoom Out Reveal
-        preloader.classList.add('zoomed-out');
-
-        // C. Clean up DOM
-        setTimeout(() => {
-            preloader.remove();
-            
-            // D. TRIGGER HOME PAGE UFO LANDING (Only on Home)
-            if (isHome) {
-                const logo = document.getElementById('hero-logo');
-                if(logo) logo.classList.add('landed');
-            }
-
-        }, 800); // Wait for zoom transition
-
-    }, loadTime);
-
-
-    // ==========================================
-    // 1. MENU TOGGLE LOGIC (FIXED)
-    // ==========================================
+    
+    // --- 1. MENU TOGGLE LOGIC ---
     const menuBtn = document.getElementById('menu-toggle-btn');
     const menuOverlay = document.getElementById('menu-overlay');
 
@@ -90,9 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ==========================================
-    // 2. THREE.JS BACKGROUND
-    // ==========================================
+    // --- 2. THREE.JS BACKGROUND ---
     const canvasContainer = document.getElementById('canvas-container');
     if (canvasContainer) {
         const scene = new THREE.Scene();
@@ -154,10 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ==========================================
-    // 3. GENERATE PAGE CONTENT
-    // ==========================================
-    if (!isHome) {
+    // --- 3. PAGE CONTENT GENERATOR ---
+    const isHomePage = document.getElementById('hero-logo');
+
+    if (!isHomePage) {
         if (!document.querySelector('.nav-header')) {
             const header = document.createElement('nav'); 
             header.className = 'nav-header';
@@ -165,7 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.prepend(header);
         }
 
-        if (isPhoto) {
+        const path = window.location.pathname;
+        const isPhotoPage = path.includes("photography") || path.includes("photos");
+
+        if (isPhotoPage) {
             const banner = document.createElement('div'); banner.className = 'banner';
             const slider = document.createElement('div'); slider.className = 'slider';
             const sliderPhotos = [
