@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvasContainer = document.getElementById('canvas-container');
     if (canvasContainer) {
         const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x1a1a2e, 0.03);
+        // Fog color matched to Deep Teal (#244855)
+        scene.fog = new THREE.FogExp2(0x244855, 0.03);
 
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -34,13 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
         canvasContainer.appendChild(renderer.domElement);
         camera.position.z = 10;
 
-        // A. Polygon
+        // A. Polygon - Muted Blue (#90AEAD)
         const polyGeo = new THREE.IcosahedronGeometry(4, 1); 
-        const polyMat = new THREE.MeshBasicMaterial({ color: 0x00f3ff, wireframe: true, transparent: true, opacity: 0.3 });
+        const polyMat = new THREE.MeshBasicMaterial({ color: 0x90AEAD, wireframe: true, transparent: true, opacity: 0.3 });
         const polygon = new THREE.Mesh(polyGeo, polyMat);
         scene.add(polygon);
 
-        // B. Infinite Sand
+        // B. Infinite Sand - Vintage Orange (#E64833)
         const sandGeo = new THREE.BufferGeometry();
         const sandCount = 1000;
         const posArray = new Float32Array(sandCount * 3);
@@ -54,7 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         sandGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const sandMat = new THREE.PointsMaterial({ size: 0.12, color: 0x00f3ff, transparent: true, opacity: 0.8 });
+        // Sand color updated to #E64833
+        const sandMat = new THREE.PointsMaterial({ size: 0.12, color: 0xE64833, transparent: true, opacity: 0.8 });
         const sandSystem = new THREE.Points(sandGeo, sandMat);
         scene.add(sandSystem);
 
@@ -99,8 +101,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: { trigger: "body", start: "top top", end: "600px top", scrub: 1 }
             });
 
-            tl.to(letters, { color: (i) => i % 2 === 0 ? "#00f3ff" : "#ff007f", stagger: 0.1, duration: 1 })
-              .to(letters, { color: "#ffffff", duration: 1 })
+            // Animate between Muted Blue (#90AEAD) and Vintage Orange (#E64833)
+            tl.to(letters, { color: (i) => i % 2 === 0 ? "#90AEAD" : "#E64833", stagger: 0.1, duration: 1 })
+              .to(letters, { color: "#FBE9D0", duration: 1 }) // Back to Cream
               .to(logo, { top: "40px", left: "40px", scale: 0.25, xPercent: 0, yPercent: 0, transformOrigin: "top left", position: "fixed", duration: 2 });
         }
     }
@@ -179,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const contentDiv = document.createElement('div'); contentDiv.className = 'feed-container';
             blogs.forEach((item, index) => {
-                contentDiv.innerHTML += `<article class="content-item"><div class="content-text"><span style="color:var(--accent-cyan); font-weight:bold;">0${index + 1}</span><h2 class="item-title">${item.title}</h2><p>${item.desc}</p></div><div class="content-visual"><img src="${item.img}"></div></article>`;
+                contentDiv.innerHTML += `<article class="content-item"><div class="content-text"><span style="color:var(--accent-orange); font-weight:bold;">0${index + 1}</span><h2 class="item-title">${item.title}</h2><p>${item.desc}</p></div><div class="content-visual"><img src="${item.img}"></div></article>`;
             });
             document.querySelector('.scroll-container').appendChild(contentDiv);
             setTimeout(() => { if(typeof gsap !== 'undefined') gsap.utils.toArray('.content-item').forEach(item => gsap.to(item, { opacity: 1, duration: 1, scrollTrigger: { trigger: item, start: "top 85%" } })); }, 100);
