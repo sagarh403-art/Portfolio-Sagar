@@ -1,4 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    // --- 0. PRELOADER LOGIC (5 Second Timer) ---
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Set a timer for exactly 5000ms (5 seconds)
+    setTimeout(() => {
+        const loader = document.getElementById('preloader');
+        if (loader) {
+            // 1. Fade it out
+            loader.style.opacity = '0';
+            
+            // 2. Remove it from display after fade is done (0.5s later)
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 500);
+        }
+    }, 5000); 
+
+});
     
     // --- 1. MENU TOGGLE LOGIC ---
     const menuBtn = document.getElementById('menu-toggle-btn');
@@ -186,16 +205,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-
-
-// FAKE LOADER (Or wait for window.onload)
-window.addEventListener('load', () => {
-    const loader = document.getElementById('preloader');
-    if(loader) {
-        loader.style.opacity = '0';
-        setTimeout(() => {
-            loader.style.display = 'none';
-        }, 500);
-    }
-});
-
