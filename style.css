@@ -101,3 +101,89 @@ p { font-size: 1.5rem; line-height: 1.6; color: #ccc; }
 .photo-loc { font-size: 1rem; color: #ddd; font-weight: 300; }
 
 @media (max-width: 768px) { .content-item:nth-child(odd), .content-item:nth-child(even) { flex-direction: column-reverse; text-align: left; } .hero-logo { font-size: 20vw; } .item { transform: rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(300px); } }
+/* =========================================
+   8-BIT PRELOADER STYLES
+   ========================================= */
+#preloader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #1a1a2e; /* Dark Blue Background */
+    z-index: 10000; /* Must be on top of everything */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+.loader-container {
+    width: 300px;
+    text-align: center;
+}
+
+/* The Bike Animation Wrapper */
+.bike-wrapper {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 5px;
+}
+
+#bike-icon {
+    font-size: 2rem;
+    color: var(--accent-cyan);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    /* Animate from left to right in 5 seconds */
+    animation: rideAcross 5s linear forwards, bounce 0.3s infinite alternate;
+}
+
+/* The Loading Pill (Bar) */
+.loading-pill {
+    width: 100%;
+    height: 20px;
+    border: 4px solid white;
+    border-radius: 10px; /* Pill shape */
+    padding: 3px;
+    box-sizing: border-box;
+    box-shadow: 0 0 15px var(--accent-cyan);
+}
+
+.pill-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(to right, var(--accent-cyan), var(--accent-pink));
+    border-radius: 5px;
+    /* Fill up in 5 seconds */
+    animation: fillBar 5s linear forwards;
+}
+
+.loading-text {
+    margin-top: 20px;
+    font-family: 'Press Start 2P', cursive; /* 8-bit font */
+    color: var(--accent-pink);
+    font-size: 0.8rem;
+    animation: blink 0.8s infinite;
+}
+
+/* ANIMATIONS */
+@keyframes rideAcross {
+    0% { left: 0; }
+    90% { left: 90%; opacity: 1; }
+    100% { left: 100%; opacity: 0; } /* Fade out at end */
+}
+
+@keyframes fillBar {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-3px); }
+}
+
+@keyframes blink {
+    50% { opacity: 0.5; }
+}
