@@ -1,23 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. MENU TOGGLE ---
+    // --- 1. MENU TOGGLE (Stylized X) ---
     const menuBtn = document.getElementById('menu-toggle-btn');
     const menuOverlay = document.getElementById('menu-overlay');
 
     if (menuBtn && menuOverlay) {
         menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('open'); // Triggers CSS X animation
             menuOverlay.classList.toggle('active');
-            if (menuOverlay.classList.contains('active')) {
-                menuBtn.innerHTML = '<i class="fa-solid fa-xmark"></i> CLOSE';
-            } else {
-                menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i> MENU';
-            }
         });
         
         document.querySelectorAll('.menu-item').forEach(link => {
             link.addEventListener('click', () => {
                 menuOverlay.classList.remove('active');
-                menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i> MENU';
+                menuBtn.classList.remove('open');
             });
         });
     }
@@ -42,65 +38,32 @@ document.addEventListener('DOMContentLoaded', () => {
         pointLight.position.set(10, 10, 10);
         scene.add(pointLight);
 
-        // A. Polygon
-        const polyGeo = new THREE.IcosahedronGeometry(4, 1); 
-        const polyMat = new THREE.MeshBasicMaterial({ color: 0x90AEAD, wireframe: true, transparent: true, opacity: 0.1 }); 
+        // A. PROMINENT ICOSAHEDRON (Interact with SAGAR)
+        const polyGeo = new THREE.IcosahedronGeometry(6, 1); // Increased Size
+        const polyMat = new THREE.MeshStandardMaterial({ 
+            color: 0x00f3ff, // Cyan to pop against background
+            wireframe: true, 
+            transparent: true, 
+            opacity: 0.5,
+            emissive: 0x244855,
+            emissiveIntensity: 0.5
+        }); 
         const polygon = new THREE.Mesh(polyGeo, polyMat);
         scene.add(polygon);
-
-        // B. "Penne" Tubes (Short & Thick) - ONLY ON HOME
-        const scribbleGroup = new THREE.Group();
-        if (isHomePage) {
-            
-            // Function to create SHORT (Penne) curves
-            function getPenneCurve() {
-                const points = [];
-                // Start Point (Random location on screen)
-                const startX = (Math.random() - 0.5) * 50;
-                const startY = (Math.random() - 0.5) * 60;
-                const startZ = (Math.random() - 0.5) * 20;
-                
-                // Generate 3 points very close to the start point to make it short
-                for (let i = 0; i < 3; i++) {
-                    points.push(new THREE.Vector3(
-                        startX + (Math.random() - 0.5) * 5, // Short spread X
-                        startY + (Math.random() - 0.5) * 5, // Short spread Y
-                        startZ + (Math.random() - 0.5) * 2  // Short spread Z
-                    ));
-                }
-                return new THREE.CatmullRomCurve3(points);
-            }
-
-            for(let s=0; s<50; s++) { /* 50 Penne pieces */
-                const path = getPenneCurve();
-                // Radius 0.3 = THICK (Penne style)
-                const tubeGeo = new THREE.TubeGeometry(path, 8, 0.3, 8, false); 
-                const tubeMat = new THREE.MeshStandardMaterial({ 
-                    color: 0x90AEAD, /* Palette Blue */
-                    roughness: 0.4,
-                    metalness: 0.1
-                });
-                const tube = new THREE.Mesh(tubeGeo, tubeMat);
-                scribbleGroup.add(tube);
-            }
-            scene.add(scribbleGroup);
-        }
 
         let scrollY = 0;
         const animateMain = () => {
             requestAnimationFrame(animateMain);
             
-            polygon.rotation.y += 0.002;
+            // Interaction: Rotate Polygon based on scroll
+            polygon.rotation.y += 0.002 + (scrollY * 0.0001);
+            polygon.rotation.x += 0.001;
             
-            if (isHomePage) {
-                // Move Penne Up
-                scribbleGroup.position.y = scrollY * 0.05; 
-                scribbleGroup.rotation.z += 0.0005;
-                
-                scribbleGroup.children.forEach((child, i) => {
-                    child.rotation.x += 0.01; // Spin the penne
-                    child.rotation.y += 0.01;
-                });
+            // If Home Page, make it float around the center text
+            if(isHomePage) {
+                // Gentle pulse scale
+                const scale = 1 + Math.sin(Date.now() * 0.001) * 0.1;
+                polygon.scale.set(scale, scale, scale);
             }
 
             renderer.render(scene, camera);
@@ -115,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 3. HERO LOGO (STRICT TOP-LEFT LOGIC) ---
+    // --- 3. HERO LOGO (FIXED TOP-LEFT MOVEMENT) ---
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
         
@@ -124,12 +87,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const tl = gsap.timeline();
 
             // 1. LANDING: Center Screen
+            // We set transforms explicitly to ensure start state
             tl.fromTo(logo, 
                 { opacity: 0, scale: 0.5, top: "50%", left: "50%", xPercent: -50, yPercent: -50 }, 
                 { opacity: 1, scale: 1, top: "50%", left: "50%", xPercent: -50, yPercent: -50, duration: 2.5, ease: "power3.out", delay: 3 }
             );
 
             // 2. SCROLL: Force to Top-Left
+            // We animate 'top' and 'left' to fixed pixels, and kill the % transforms
             gsap.to(logo, {
                 scrollTrigger: { 
                     trigger: "body", 
@@ -139,8 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 top: "40px",
                 left: "40px",
-                xPercent: 0, 
-                yPercent: 0,
+                xPercent: 0, // IMPORTANT: Resets horizontal center
+                yPercent: 0, // IMPORTANT: Resets vertical center
                 scale: 0.25,
                 color: "#E64833",
                 ease: "power1.out"
