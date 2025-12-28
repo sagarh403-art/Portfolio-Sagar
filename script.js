@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. MENU TOGGLE LOGIC ---
+    // --- 1. MENU TOGGLE ---
     const menuBtn = document.getElementById('menu-toggle-btn');
     const menuOverlay = document.getElementById('menu-overlay');
 
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvasContainer = document.getElementById('canvas-container');
     if (canvasContainer) {
         const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x244855, 0.03);
+        scene.fog = new THREE.FogExp2(0x244855, 0.03); // Teal Fog
 
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -34,13 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
         canvasContainer.appendChild(renderer.domElement);
         camera.position.z = 10;
 
-        // Polygon
         const polyGeo = new THREE.IcosahedronGeometry(4, 1); 
-        const polyMat = new THREE.MeshBasicMaterial({ color: 0x90AEAD, wireframe: true, transparent: true, opacity: 0.3 });
+        const polyMat = new THREE.MeshBasicMaterial({ color: 0x90AEAD, wireframe: true, transparent: true, opacity: 0.3 }); // Muted Blue
         const polygon = new THREE.Mesh(polyGeo, polyMat);
         scene.add(polygon);
 
-        // Sand
         const sandGeo = new THREE.BufferGeometry();
         const sandCount = 1000;
         const posArray = new Float32Array(sandCount * 3);
@@ -54,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         sandGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const sandMat = new THREE.PointsMaterial({ size: 0.12, color: 0xE64833, transparent: true, opacity: 0.8 });
+        const sandMat = new THREE.PointsMaterial({ size: 0.12, color: 0xE64833, transparent: true, opacity: 0.8 }); // Orange
         const sandSystem = new THREE.Points(sandGeo, sandMat);
         scene.add(sandSystem);
 
@@ -84,7 +82,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 3. PAGE CONTENT GENERATOR ---
+    // --- 3. HERO LOGO ANIMATION (FIXED) ---
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        const logo = document.getElementById("hero-logo");
+        if (logo) {
+            // Note: The CSS 'ufoDrop' animation brings it to center. 
+            // GSAP takes it from center to Top-Left.
+            
+            const tl = gsap.timeline({
+                scrollTrigger: { trigger: "body", start: "top top", end: "600px top", scrub: 1 }
+            });
+
+            // Force GSAP to recognize the element is centered initially
+            gsap.set(logo, { xPercent: -50, yPercent: -50, top: "50%", left: "50%", scale: 1 });
+
+            tl.to(logo, { 
+                top: "40px", 
+                left: "40px", 
+                xPercent: 0, 
+                yPercent: 0, 
+                scale: 0.25, 
+                color: "#E64833", /* Change to Orange on scroll */
+                duration: 2 
+            });
+        }
+    }
+
+    // --- 4. PAGE CONTENT GENERATOR ---
     const isHomePage = document.getElementById('hero-logo');
 
     if (!isHomePage) {
@@ -99,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const isPhotoPage = path.includes("photography") || path.includes("photos");
 
         if (isPhotoPage) {
+            // ... (Photo Code) ...
             const banner = document.createElement('div'); banner.className = 'banner';
             const slider = document.createElement('div'); slider.className = 'slider';
             const sliderPhotos = [
@@ -138,7 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             recentSection.appendChild(grid);
             document.querySelector('.scroll-container').appendChild(recentSection);
+
         } else {
+            // ... (Blog Code) ...
             const blogs = [
                 { title: "Digital Realms", desc: "Building worlds.", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80" },
                 { title: "Neon Dreams", desc: "Cyberpunk aesthetics.", img: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800&q=80" },
