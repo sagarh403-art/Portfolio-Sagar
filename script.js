@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
     // --- PART A: WIREFRAME ROBOT HEAD (MENU) ---
-    // Safety: Only run if container exists (Works on all pages)
     const robotContainer = document.getElementById('robot-container');
     if (robotContainer) {
         const robScene = new THREE.Scene();
@@ -9,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         robCamera.position.z = 5;
 
         const robRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        robRenderer.setSize(80, 80); 
+        robRenderer.setSize(60, 60); 
         robotContainer.appendChild(robRenderer.domElement);
 
         const headGeo = new THREE.BoxGeometry(1.8, 1.8, 1.8);
@@ -44,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- PART B: MAIN BACKGROUND (POLYGON + SAND) ---
+    // --- PART B: MAIN BACKGROUND (POLYGON + CONSTANT SAND) ---
     const canvasContainer = document.getElementById('canvas-container');
     if (canvasContainer) {
         const scene = new THREE.Scene();
@@ -62,17 +61,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const polygon = new THREE.Mesh(polyGeo, polyMat);
         scene.add(polygon);
 
-        // Sand
+        // --- NEW SAND LOGIC (ALWAYS VISIBLE) ---
         const sandGeo = new THREE.BufferGeometry();
-        const sandCount = 1000;
+        const sandCount = 1500; // More particles
         const posArray = new Float32Array(sandCount * 3);
         const speedArray = new Float32Array(sandCount); 
 
         for(let i=0; i<sandCount; i++) {
+            // Spread particles across a wide area centered on camera
             posArray[i*3] = (Math.random() - 0.5) * 60;   
             posArray[i*3+1] = (Math.random() - 0.5) * 60; 
             posArray[i*3+2] = (Math.random() - 0.5) * 40; 
-            speedArray[i] = 0.0005 + Math.random() * 0.001; 
+            speedArray[i] = 0.005 + Math.random() * 0.01; // Constant slow speed
         }
 
         sandGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
@@ -83,19 +83,28 @@ document.addEventListener('DOMContentLoaded', () => {
         let scrollY = 0;
         const animateMain = () => {
             requestAnimationFrame(animateMain);
-            // Polygon moves up and fades
+
+            // Polygon behaves normally (fades out)
             polygon.rotation.y += 0.002;
             polygon.position.y = scrollY * 0.01; 
             polygon.material.opacity = Math.max(0, 0.3 - (scrollY * 0.0005));
 
-            // Sand moves up
-            sandSystem.position.y = scrollY * 0.05; 
+            // --- SAND UPDATE (INFINITE LOOP) ---
+            // We do NOT move sandSystem.position.y with scroll.
+            // Instead, we let particles flow naturally in the background.
+            
             const positions = sandSystem.geometry.attributes.position.array;
             for(let i=0; i<sandCount; i++) {
+                // Move particle UP
                 positions[i*3+1] += speedArray[i]; 
-                if(positions[i*3+1] > 30) positions[i*3+1] = -30;
+
+                // Reset to bottom if it goes off top screen
+                if(positions[i*3+1] > 30) {
+                    positions[i*3+1] = -30;
+                }
             }
             sandSystem.geometry.attributes.position.needsUpdate = true; 
+
             renderer.render(scene, camera);
         };
         animateMain();
@@ -108,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- PART C: SAGAR ANIMATION (Home Page Only) ---
+    // --- PART C: SAGAR ANIMATION ---
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
         
@@ -125,13 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- PART D: PAGE CONTENT GENERATOR (Blogs/Photos) ---
-    // Check if we are NOT on home page (Logo is missing)
+    // --- PART D: PAGE CONTENT GENERATOR ---
     const isHomePage = document.getElementById('hero-logo');
-
     if (!isHomePage) {
-        
-        // 1. ADD BACK BUTTON (Check if exists first)
         if (!document.querySelector('.nav-header')) {
             const header = document.createElement('nav'); 
             header.className = 'nav-header';
@@ -142,7 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const path = window.location.pathname;
         const isPhotoPage = path.includes("photography") || path.includes("photos");
 
-        // 2. PHOTOGRAPHY PAGE (3D SLIDER)
         if (isPhotoPage) {
             const banner = document.createElement('div');
             banner.className = 'banner';
@@ -175,8 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
             banner.appendChild(slider);
             document.querySelector('.scroll-container').appendChild(banner);
         } 
-        
-        // 3. BLOGS PAGE (ZIG ZAG)
         else {
             const blogs = [
                 { title: "Digital Realms", desc: "Building worlds with code.", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80" },
