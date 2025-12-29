@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sagar | Future Vision</title>
-    <link rel="stylesheet" href="style.css?v=13.0">
+    <link rel="stylesheet" href="style.css?v=13.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="home-mode">
+
+    <div id="preloader"><div style="font-family:'Orbitron'; font-size:50px; color:#FF4D30;">SAGAR.</div></div>
 
     <div id="canvas-container"></div>
 
@@ -24,36 +26,33 @@
             <a href="blogs.html" class="menu-item">BLOGS</a>
             <a href="photography.html" class="menu-item">PHOTOS</a>
             <a href="index.html#about" class="menu-item">ABOUT</a>
-            <a href="index.html#socials" class="menu-item">CONTACT</a>
+            <a href="#socials" class="menu-item">CONTACT</a>
         </div>
     </div>
 
     <header class="hero-section">
         <div class="hero-content">
-            
             <div class="hero-text-side">
                 <h1 class="hero-main-title">SAGAR</h1>
                 <div class="hero-desc">
-                    We innovate. We Create. We Transform.<br>
+                    Innovate. Create. Transform.<br>
                     Step into the future with cutting-edge digital art and code.
                 </div>
                 <div class="hero-actions">
                     <a href="#fan-gallery" class="btn-glass primary">DISCOVER</a>
-                    <a href="#socials" class="btn-glass"><i class="fa-brands fa-discord"></i> CONNECT</a>
+                    <a href="#socials" class="btn-glass"><i class="fa-solid fa-envelope"></i> CONNECT</a>
                 </div>
             </div>
-
             <div class="hero-img-side">
                 <div class="orbit-circle orbit-1"></div>
                 <div class="orbit-circle orbit-2"></div>
                 <img src="https://images.unsplash.com/photo-1535378437327-1e827252fce8?w=800&q=80" alt="Futuristic Face" class="robot-img">
             </div>
-
         </div>
     </header>
 
     <section class="fan-section" id="fan-gallery">
-        <h2 style="font-family:'Orbitron', sans-serif; color:var(--text-cream);">LATEST VISUALS</h2>
+        <h2 style="font-family:'Orbitron', sans-serif; color:var(--text-cream); margin-bottom:50px;">LATEST VISUALS</h2>
         <div class="fan-container">
             <div class="fan-card" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80');" onclick="window.open('https://instagram.com', '_blank')"></div>
             <div class="fan-card" style="background-image: url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=600&q=80');" onclick="window.open('https://instagram.com', '_blank')"></div>
@@ -61,20 +60,34 @@
             <div class="fan-card" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80');" onclick="window.open('https://instagram.com', '_blank')"></div>
             <div class="fan-card" style="background-image: url('https://images.unsplash.com/photo-1558655146-d09347e0c766?w=600&q=80');" onclick="window.open('https://instagram.com', '_blank')"></div>
         </div>
-        <p style="margin-top:40px; color:var(--accent-blue);">HOVER TO EXPLORE • CLICK TO VISIT</p>
+        <p style="margin-top:60px; color:var(--accent-blue);">HOVER TO EXPLORE • CLICK TO VISIT</p>
     </section>
 
-    <section class="panel center" id="about">
-        <div class="panel-content soft-card">
-            <h2>THE CREATOR</h2>
-            <p>I design digital universes.<br><strong>Art</strong> + <strong>Code</strong> + <strong>Soul</strong>.</p>
-            <a href="./Sagar_CV.pdf" target="_blank" class="btn-glass primary">DOWNLOAD CV</a>
-        </div>
-    </section>
+    <main class="scroll-container">
+        <section class="panel center" id="about">
+            <div class="soft-card">
+                <h2>THE CREATOR</h2>
+                <p>I design digital universes.<br><strong>Art</strong> + <strong>Code</strong> + <strong>Soul</strong>.</p>
+                <a href="./Sagar_CV.pdf" target="_blank" class="btn-glass primary" style="margin-top:20px; display:inline-flex;">DOWNLOAD CV</a>
+            </div>
+        </section>
+        
+        <section class="panel center" id="socials">
+            <div class="soft-card">
+                <h2>CONNECT</h2>
+                <div class="social-grid">
+                    <a href="https://twitter.com" target="_blank" class="social-pill"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://linkedin.com" target="_blank" class="social-pill"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://youtube.com" target="_blank" class="social-pill"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="mailto:yourmail@gmail.com" class="social-pill"><i class="fa-solid fa-envelope"></i></a>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="./script.js?v=13.0"></script>
+    <script src="./script.js?v=13.1"></script>
 </body>
 </html>
