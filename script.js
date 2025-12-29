@@ -19,7 +19,7 @@ window.onload = () => {
 
     // --- 2. THREE.JS BACKGROUND ---
     const canvasContainer = document.getElementById('canvas-container');
-    const isHomePage = !!document.getElementById('hero-main-title'); // Changed check to Hero Title
+    const isHomePage = !!document.getElementById('hero-main-title');
 
     if (canvasContainer) {
         const scene = new THREE.Scene();
@@ -34,7 +34,7 @@ window.onload = () => {
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
         scene.add(ambientLight);
 
-        // Grid & Particles
+        // Grid
         const gridHelper = new THREE.GridHelper(200, 40, 0xFF4D30, 0x0F1C22); gridHelper.position.y = -5; scene.add(gridHelper);
         const gridHelper2 = new THREE.GridHelper(200, 40, 0xFF4D30, 0x0F1C22); gridHelper2.position.y = -5; gridHelper2.position.z = -200; scene.add(gridHelper2);
         const starGeo = new THREE.BufferGeometry(); const starCount = 1000; const starPos = new Float32Array(starCount * 3); for(let i=0; i<starCount*3; i++) starPos[i] = (Math.random() - 0.5) * 150; starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3)); const starMat = new THREE.PointsMaterial({ size: 0.15, color: 0x00F0FF, transparent: true, opacity: 0.8 }); const stars = new THREE.Points(starGeo, starMat); scene.add(stars);
@@ -57,12 +57,11 @@ window.onload = () => {
     const isPhotoPage = path.includes("photography") || path.includes("photos");
     const isBlogPage = path.includes("blogs");
 
-    // Only inject content if we are NOT on home page
     if (!isHomePage && scrollContainer) {
         
         // --- PHOTOGRAPHY PAGE ---
         if (isPhotoPage) {
-            // 3D SLIDER
+            // 3D Slider
             const banner = document.createElement('div'); banner.className = 'banner';
             const slider = document.createElement('div'); slider.className = 'slider';
             const sliderPhotos = [
@@ -85,10 +84,13 @@ window.onload = () => {
             banner.appendChild(slider); 
             scrollContainer.appendChild(banner);
 
-            // GRID BELOW SLIDER
+            // GRID LAYOUT (The "Cool" one from v12)
             const recentSection = document.createElement('div'); recentSection.className = 'feed-container';
             recentSection.innerHTML = '<h2 style="text-align:center; color:white; margin-bottom:50px;">GALLERY</h2>';
             
+            const gridDiv = document.createElement('div');
+            gridDiv.className = 'recent-grid'; // Uses the grid styles from CSS
+
             const recentPhotos = [
                 { title: "Neon Rain", img: sliderPhotos[0] }, 
                 { title: "Cyber Alley", img: sliderPhotos[1] }, 
@@ -96,10 +98,16 @@ window.onload = () => {
                 { title: "Market", img: sliderPhotos[3] }
             ];
             recentPhotos.forEach(photo => { 
-                const card = document.createElement('div'); card.className = 'content-item';
-                card.innerHTML = `<div class="content-text"><h2 class="item-title">${photo.title}</h2><p>Shot in 35mm</p></div><div class="content-visual"><img src="${photo.img}"></div>`;
-                recentSection.appendChild(card);
+                const card = document.createElement('div'); card.className = 'recent-card';
+                card.innerHTML = `
+                    <img src="${photo.img}" class="recent-img">
+                    <div class="photo-info">
+                        <h3 class="photo-title">${photo.title}</h3>
+                    </div>
+                `;
+                gridDiv.appendChild(card);
             });
+            recentSection.appendChild(gridDiv);
             scrollContainer.appendChild(recentSection);
         }
 
@@ -114,14 +122,15 @@ window.onload = () => {
             const contentDiv = document.createElement('div'); contentDiv.className = 'feed-container';
             blogs.forEach((item, index) => {
                 const article = document.createElement('article');
-                article.className = 'content-item';
+                article.className = 'content-item'; // Styles handled by CSS
                 article.onclick = () => window.open(item.link, '_blank');
+                
+                // NO "READ ON BLOGGER" TEXT HERE
                 article.innerHTML = `
                     <div class="content-text">
                         <span style="color:var(--accent-orange); font-weight:bold;">0${index + 1}</span>
                         <h2 class="item-title">${item.title}</h2>
                         <p>${item.desc}</p>
-                        <span style="font-size:0.8rem; text-decoration:underline; color:var(--accent-orange);">READ ON BLOGGER →</span>
                     </div>
                     <div class="content-visual"><img src="${item.img}"></div>
                 `;
