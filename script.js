@@ -19,7 +19,7 @@ window.onload = () => {
 
     // --- 2. THREE.JS BACKGROUND ---
     const canvasContainer = document.getElementById('canvas-container');
-    const isHomePage = !!document.getElementById('hero-main-title');
+    const isHomePage = !!document.getElementById('hero-main-title'); // Only true on index.html
 
     if (canvasContainer) {
         const scene = new THREE.Scene();
@@ -29,22 +29,59 @@ window.onload = () => {
         renderer.setSize(window.innerWidth, window.innerHeight);
         canvasContainer.appendChild(renderer.domElement);
         
+        // DEFAULT CAMERA POSITION (Home)
         camera.position.set(0, 5, 20);
         camera.rotation.x = -0.2;
+
+        // IF NOT HOME PAGE (Photos/Blogs) -> RESET CAMERA
+        if (!isHomePage) {
+            camera.position.set(0, 0, 30); // Look straight at center
+            camera.rotation.x = 0;
+        }
+
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
         scene.add(ambientLight);
 
-        // Grid
-        const gridHelper = new THREE.GridHelper(200, 40, 0xFF4D30, 0x0F1C22); gridHelper.position.y = -5; scene.add(gridHelper);
-        const gridHelper2 = new THREE.GridHelper(200, 40, 0xFF4D30, 0x0F1C22); gridHelper2.position.y = -5; gridHelper2.position.z = -200; scene.add(gridHelper2);
-        const starGeo = new THREE.BufferGeometry(); const starCount = 1000; const starPos = new Float32Array(starCount * 3); for(let i=0; i<starCount*3; i++) starPos[i] = (Math.random() - 0.5) * 150; starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3)); const starMat = new THREE.PointsMaterial({ size: 0.15, color: 0x00F0FF, transparent: true, opacity: 0.8 }); const stars = new THREE.Points(starGeo, starMat); scene.add(stars);
+        // GRID
+        const gridHelper = new THREE.GridHelper(200, 40, 0xFF4D30, 0x0F1C22); 
+        gridHelper.position.y = -5; 
+        scene.add(gridHelper);
+        const gridHelper2 = new THREE.GridHelper(200, 40, 0xFF4D30, 0x0F1C22); 
+        gridHelper2.position.y = -5; gridHelper2.position.z = -200; 
+        scene.add(gridHelper2);
+
+        // PARTICLES
+        const starGeo = new THREE.BufferGeometry(); const starCount = 1000; const starPos = new Float32Array(starCount * 3); 
+        for(let i=0; i<starCount*3; i++) starPos[i] = (Math.random() - 0.5) * 150; 
+        starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3)); 
+        const starMat = new THREE.PointsMaterial({ size: 0.15, color: 0x00F0FF, transparent: true, opacity: 0.8 }); 
+        const stars = new THREE.Points(starGeo, starMat); 
+        scene.add(stars);
+
+        // CENTRAL POLYGON (For Spiral Center)
+        const polyGeo = new THREE.IcosahedronGeometry(5, 1); 
+        const polyMat = new THREE.MeshBasicMaterial({ color: 0x90AEAD, wireframe: true, transparent: true, opacity: 0.2 }); 
+        const polygon = new THREE.Mesh(polyGeo, polyMat);
+        if (isHomePage) {
+            polygon.position.set(0, 5, -30); // Background deco
+        } else {
+            polygon.position.set(0, 0, 0); // Center of spiral
+        }
+        scene.add(polygon);
 
         const animateMain = () => {
             requestAnimationFrame(animateMain);
-            gridHelper.position.z += 0.1; gridHelper2.position.z += 0.1;
-            if (gridHelper.position.z >= 200) gridHelper.position.z = -200;
-            if (gridHelper2.position.z >= 200) gridHelper2.position.z = -200;
-            stars.rotation.z += 0.0002;
+            if (isHomePage) {
+                gridHelper.position.z += 0.1; gridHelper2.position.z += 0.1;
+                if (gridHelper.position.z >= 200) gridHelper.position.z = -200;
+                if (gridHelper2.position.z >= 200) gridHelper2.position.z = -200;
+                stars.rotation.z += 0.0002;
+                polygon.rotation.y += 0.005;
+            } else {
+                // Inner page animation
+                polygon.rotation.y += 0.01; 
+                polygon.rotation.x += 0.005;
+            }
             renderer.render(scene, camera);
         };
         animateMain();
@@ -84,12 +121,12 @@ window.onload = () => {
             banner.appendChild(slider); 
             scrollContainer.appendChild(banner);
 
-            // GRID LAYOUT (The "Cool" one from v12)
+            // GRID LAYOUT (Restored)
             const recentSection = document.createElement('div'); recentSection.className = 'feed-container';
             recentSection.innerHTML = '<h2 style="text-align:center; color:white; margin-bottom:50px;">GALLERY</h2>';
             
             const gridDiv = document.createElement('div');
-            gridDiv.className = 'recent-grid'; // Uses the grid styles from CSS
+            gridDiv.className = 'recent-grid';
 
             const recentPhotos = [
                 { title: "Neon Rain", img: sliderPhotos[0] }, 
@@ -122,10 +159,10 @@ window.onload = () => {
             const contentDiv = document.createElement('div'); contentDiv.className = 'feed-container';
             blogs.forEach((item, index) => {
                 const article = document.createElement('article');
-                article.className = 'content-item'; // Styles handled by CSS
+                article.className = 'content-item';
                 article.onclick = () => window.open(item.link, '_blank');
                 
-                // NO "READ ON BLOGGER" TEXT HERE
+                // NO "READ ON BLOGGER" TEXT
                 article.innerHTML = `
                     <div class="content-text">
                         <span style="color:var(--accent-orange); font-weight:bold;">0${index + 1}</span>
