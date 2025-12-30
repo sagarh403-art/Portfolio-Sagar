@@ -3,44 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sagar | Blogs</title>
-    <link rel="stylesheet" href="style.css?v=14.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>SAGAR H | Blogs</title>
+    <link rel="stylesheet" href="style.css?v=15.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="content-mode">
-
-    <div id="preloader">
-        <div class="paper-sheet">
-            <div class="blog-text">BLOG</div>
-            <div class="pixel-pencil"></div>
-        </div>
+<body>
+    <nav class="nav-pill" id="desktop-nav">
+        <a href="index.html">Home</a>
+        <a href="index.html#about">About</a>
+        <a href="blogs.html">Blogs</a>
+        <a href="photography.html">Photos</a>
+        <a href="index.html#hero">Contact</a>
+    </nav>
+    <div class="menu-btn" id="mobile-toggle"><div class="menu-line"></div><div class="menu-line"></div><div class="menu-line"></div></div>
+    <div class="mobile-overlay" id="mobile-overlay">
+        <a href="index.html" class="mobile-link">HOME</a>
+        <a href="blogs.html" class="mobile-link">BLOGS</a>
+        <a href="photography.html" class="mobile-link">PHOTOS</a>
     </div>
 
     <div id="canvas-container"></div>
 
-    <a href="index.html" class="fixed-logo" id="fixed-logo" style="opacity: 1;">SAGAR.</a>
-
-    <button id="menu-toggle-btn" class="menu-btn">
-        <span class="menu-line"></span>
-        <span class="menu-line"></span>
-    </button>
-
-    <div class="menu-overlay" id="menu-overlay">
-        <div class="menu-links">
-            <a href="index.html" class="menu-item">HOME</a>
-            <a href="blogs.html" class="menu-item">BLOGS</a>
-            <a href="photography.html" class="menu-item">PHOTOS</a>
-            <a href="index.html#about" class="menu-item">ABOUT</a>
-            <a href="index.html#socials" class="menu-item">CONTACT</a>
-        </div>
-    </div>
-
     <main class="scroll-container">
-        </main>
+        <div class="feed-container">
+            <h1 class="section-title" style="text-align:center; margin-bottom:60px;">LATEST <span style="color:var(--accent-orange)">INSIGHTS</span></h1>
+            
+            <div class="blog-grid" id="blog-grid"></div>
+        </div>
+    </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="./script.js?v=14.0"></script>
+    <script src="script.js?v=15.0"></script>
 </body>
 </html>
