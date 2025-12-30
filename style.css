@@ -51,7 +51,7 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 }
 
 .brand-logo img { 
-    height: 50px; 
+    height: 70px; 
     width: auto; 
     display: block; /* Forces image display */
     filter: drop-shadow(0 0 5px rgba(0,0,0,0.5)); 
