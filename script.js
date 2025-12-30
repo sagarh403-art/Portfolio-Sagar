@@ -1,31 +1,30 @@
-document.addEventListener("DOMContentLoaded", () => {
-    
-    // --- 0. PRELOADER (Force Open Logic) ---
+// VERSION 15.1 STABLE
+window.onload = () => {
+
+    // --- 0. PRELOADER ---
     const preloader = document.getElementById('preloader');
     if (preloader) {
-        // Normal fade out after 2 seconds
-        setTimeout(() => {
-            preloader.classList.add('loaded');
-        }, 2000);
-
-        // SAFETY BACKUP: Force remove after 5 seconds (in case of lag)
-        setTimeout(() => {
-            preloader.style.display = 'none';
-        }, 5000);
+        setTimeout(() => { preloader.classList.add('loaded'); }, 2000); 
     }
 
-    // --- 1. MASTER PHOTO DATABASE ---
+    // ==========================================
+    // 1. MASTER PHOTO DATABASE
+    // ==========================================
+    // Add photos here. Top 5 go to Fan Deck.
     const myPhotos = [
-        { src: "./assets/photo1.jpg", location: "Tokyo, Japan", desc: "Neon lights reflecting on wet pavement." },
-        { src: "./assets/photo2.jpg", location: "Kyoto Streets", desc: "Traditional vibes in a modern world." },
-        { src: "./assets/photo3.jpg", location: "Times Square, NYC", desc: "The city that never sleeps." },
-        { src: "./assets/photo4.jpg", location: "Bengaluru, India", desc: "Tech hub aesthetics." },
-        { src: "./assets/photo5.jpg", location: "London Eye", desc: "A view from the top." }
+        { src: "./photos/IMG_20251101_063329.jpg", location: "Tokyo, Japan", desc: "Neon lights reflecting on wet pavement." },
+        { src: "./photos/IMG_20251101_070352.jpg", location: "Kyoto Streets", desc: "Traditional vibes in a modern world." },
+        { src: "./photos/IMG_20250913_192716.jpg", location: "Times Square, NYC", desc: "The city that never sleeps." },
+        { src: "./photos/IMG_20250914_114126.jpg", location: "Bengaluru, India", desc: "Tech hub aesthetics." },
+        { src: "./photos/IMG_20250914_094000.png", location: "London Eye", desc: "A view from the top." },
     ];
 
-    // --- 2. CONTENT GENERATORS ---
 
-    // A. Fan Deck
+    // ==========================================
+    // 2. CONTENT GENERATORS
+    // ==========================================
+
+    // A. Fan Deck (Home Page)
     const fanContainer = document.querySelector('.fan-container');
     if (fanContainer) {
         fanContainer.innerHTML = ''; 
@@ -39,9 +38,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // B. Photo Grid & Lightbox
+    // B. Photo Grid & Lightbox (Photos Page)
     const photoGrid = document.getElementById('photo-grid');
     if (photoGrid) {
+        // Create Lightbox
         let lightbox = document.getElementById('lightbox');
         if (!lightbox) {
             lightbox = document.createElement('div');
@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         const lightboxImg = lightbox.querySelector('img');
 
+        // Populate Grid
         myPhotos.forEach(photo => {
             const item = document.createElement('div');
             item.className = 'gallery-item';
@@ -71,12 +72,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const blogGrid = document.getElementById('blog-grid');
     if (blogGrid) {
         const blogs = [
-            { 
-                title: "Hello World: Welcome to My Digital Garden", 
-                desc: "Stepping into the digital universe. A first look at my new journey.", 
-                img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80", 
-                link: "https://sagarh-helloworld.blogspot.com/2025/12/hello-world-welcome-to-my-digital-garden.html" 
-            }
+            { title: "Future of UI", desc: "Exploring neon aesthetics.", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600", link: "#" },
+            { title: "Cyberpunk Art", desc: "Digital revolution.", img: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=600", link: "#" },
+            { title: "3D Web Design", desc: "Three.js tutorials.", img: "https://images.unsplash.com/photo-1517404215738-15263e9f9178?w=600", link: "#" }
         ];
         blogs.forEach(post => {
             const card = document.createElement('a'); card.href = post.link; card.target = "_blank"; card.className = 'blog-card';
@@ -85,7 +83,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- 3. UI LOGIC ---
+    // ==========================================
+    // 3. UI LOGIC
+    // ==========================================
     const navPill = document.getElementById('desktop-nav');
     if(navPill) window.addEventListener('scroll', () => navPill.classList.toggle('scrolled', window.scrollY > 50));
 
@@ -96,9 +96,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', () => { mobileToggle.classList.remove('open'); mobileOverlay.classList.remove('active'); }));
     }
 
-    // --- 4. THREE.JS ---
+    // ==========================================
+    // 4. THREE.JS
+    // ==========================================
     const canvasContainer = document.getElementById('canvas-container');
-    if (canvasContainer && typeof THREE !== 'undefined') {
+    if (canvasContainer) {
         const scene = new THREE.Scene(); scene.fog = new THREE.FogExp2(0x121212, 0.02);
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -117,7 +119,9 @@ document.addEventListener("DOMContentLoaded", () => {
         window.addEventListener('resize', () => { camera.aspect = window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth,window.innerHeight); });
     }
 
-    // --- 5. GSAP ---
+    // ==========================================
+    // 5. GSAP
+    // ==========================================
     if (typeof gsap !== 'undefined' && document.querySelector('.hero-title')) {
         gsap.from(".hero-title", { y: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 0.2 });
         gsap.from(".hero-desc", { y: 30, opacity: 0, duration: 1, ease: "power3.out", delay: 0.4 });
@@ -125,4 +129,4 @@ document.addEventListener("DOMContentLoaded", () => {
         gsap.from(".hero-bottom-bar", { y: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 1 });
         gsap.from(".fan-card", { scrollTrigger: { trigger: ".fan-section", start: "top 80%" }, y: 100, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out" });
     }
-});
+};
