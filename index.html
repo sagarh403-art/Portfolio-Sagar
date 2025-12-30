@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAGAR H | Digital Portfolio</title>
-    <link rel="stylesheet" href="style.css?v=15.0">
+    <link rel="stylesheet" href="style.css?v=15.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -14,13 +14,15 @@
         <a href="#about">About</a>
         <a href="blogs.html">Blogs</a>
         <a href="photography.html">Photos</a>
-        <a href="#hero">Contact</a> </nav>
+        <a href="#hero">Contact</a>
+    </nav>
 
     <div class="menu-btn" id="mobile-toggle">
         <div class="menu-line"></div>
         <div class="menu-line"></div>
         <div class="menu-line"></div>
     </div>
+    
     <div class="mobile-overlay" id="mobile-overlay">
         <a href="index.html" class="mobile-link">HOME</a>
         <a href="#about" class="mobile-link">ABOUT</a>
@@ -48,43 +50,46 @@
 
             <div class="hero-right">
                 <div class="visor-line"></div>
-                <img src="./assets/Sagar3d.png" alt="Sagar H" class="hero-img">
+                <img src="./assets/my-photo.png" alt="Sagar H" class="hero-img">
             </div>
         </div>
 
         <div class="hero-bottom-bar">
-            <div style="font-family:'Orbitron'; color:#666;">SCROLL TO EXPLORE</div>
-            
             <div class="social-links">
                 <a href="https://twitter.com" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
-                <a href="https://linkedin.com" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
                 <a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
                 <a href="mailto:yourmail@gmail.com"><i class="fa-solid fa-envelope"></i></a>
             </div>
         </div>
     </header>
 
-    <section class="section" id="about">
-        <h2 class="section-title">ABOUT <span style="color:var(--accent-orange)">ME</span></h2>
-        <p style="font-size:1.2rem; color:var(--text-dim); max-width:800px; line-height:1.8;">
-            I am a digital creator passionate about merging aesthetics with technology. 
-            From immersive web environments to visual storytelling, I build experiences that stand out.
-        </p>
-    </section>
+    <main class="scroll-container">
+        
+        <section class="section" id="about">
+            <h2 class="section-title">ABOUT <span style="color:var(--accent-orange)">ME</span></h2>
+            <p style="font-size:1.2rem; color:var(--text-dim); max-width:800px; line-height:1.8;">
+                I am a digital creator passionate about merging aesthetics with technology. 
+                From immersive web environments to visual storytelling, I build experiences that stand out.
+            </p>
+        </section>
 
-    <section class="fan-section">
-        <h2 style="font-family:'Orbitron'; margin-bottom:50px;">LATEST WORK</h2>
-        <div class="fan-container">
-            <div class="fan-card" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80');" onclick="window.location.href='photography.html'"></div>
-            <div class="fan-card" style="background-image: url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=600&q=80');" onclick="window.location.href='photography.html'"></div>
-            <div class="fan-card" style="background-image: url('https://images.unsplash.com/photo-1517404215738-15263e9f9178?w=600&q=80');" onclick="window.location.href='photography.html'"></div>
-            <div class="fan-card" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80');" onclick="window.location.href='photography.html'"></div>
-            <div class="fan-card" style="background-image: url('https://images.unsplash.com/photo-1558655146-d09347e0c766?w=600&q=80');" onclick="window.location.href='photography.html'"></div>
-        </div>
-    </section>
+        <section class="fan-section">
+            <h2 style="font-family:'Orbitron'; margin-bottom:50px;">LATEST WORK</h2>
+            <div class="fan-container">
+                <div class="fan-card" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80');" onclick="window.location.href='photography.html'"></div>
+                <div class="fan-card" style="background-image: url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=600&q=80');" onclick="window.location.href='photography.html'"></div>
+                <div class="fan-card" style="background-image: url('https://images.unsplash.com/photo-1517404215738-15263e9f9178?w=600&q=80');" onclick="window.location.href='photography.html'"></div>
+                <div class="fan-card" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80');" onclick="window.location.href='photography.html'"></div>
+                <div class="fan-card" style="background-image: url('https://images.unsplash.com/photo-1558655146-d09347e0c766?w=600&q=80');" onclick="window.location.href='photography.html'"></div>
+            </div>
+        </section>
+
+    </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="script.js?v=15.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js?v=15.1"></script>
 </body>
 </html>
