@@ -1,5 +1,15 @@
 window.onload = () => {
 
+        // --- 0. PRELOADER LOGIC ---
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        // Wait 2 seconds for animation, then fade out
+        setTimeout(() => {
+            preloader.classList.add('loaded');
+        }, 2000); 
+    }
+    
+
     // --- 1. NAVIGATION LOGIC ---
     const navPill = document.getElementById('desktop-nav');
     if(navPill) {
