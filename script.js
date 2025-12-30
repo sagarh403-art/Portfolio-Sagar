@@ -71,17 +71,46 @@ window.onload = () => {
     // C. Blogs
     const blogGrid = document.getElementById('blog-grid');
     if (blogGrid) {
+            // --- C. Generate Blogs (Blogs Page) ---
+    const blogGrid = document.getElementById('blog-grid');
+    if (blogGrid) {
+        
         const blogs = [
-            { title: "Future of UI", desc: "Exploring neon aesthetics.", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600", link: "#" },
-            { title: "Cyberpunk Art", desc: "Digital revolution.", img: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=600", link: "#" },
-            { title: "3D Web Design", desc: "Three.js tutorials.", img: "https://images.unsplash.com/photo-1517404215738-15263e9f9178?w=600", link: "#" }
+            { 
+                title: "Hello World: Welcome to My Digital Garden", 
+                desc: "Stepping into the digital universe. A first look at my new journey.", 
+                // I put a placeholder image below. 
+                // To use your real blog photo: Right-click the photo on your blog -> Copy Image Address -> Paste here.
+                img: "https://sagarh-helloworld.blogspot.com/2025/12/hello-world-welcome-to-my-digital-garden.html", 
+                link: "https://sagarh-helloworld.blogspot.com/2025/12/hello-world-welcome-to-my-digital-garden.html" 
+            },
+            // You can add a second post here later:
+            /*
+            { 
+                title: "My Second Post", 
+                desc: "Description...", 
+                img: "LINK_TO_IMAGE", 
+                link: "LINK_TO_BLOG_POST" 
+            },
+            */
         ];
+
         blogs.forEach(post => {
-            const card = document.createElement('a'); card.href = post.link; card.target = "_blank"; card.className = 'blog-card';
-            card.innerHTML = `<img src="${post.img}" class="blog-img"><div class="blog-content"><h3 class="blog-title">${post.title}</h3><p class="blog-desc">${post.desc}</p></div>`;
+            const card = document.createElement('a'); 
+            card.href = post.link; 
+            card.target = "_blank"; 
+            card.className = 'blog-card';
+            card.innerHTML = `
+                <img src="${post.img}" class="blog-img" alt="${post.title}">
+                <div class="blog-content">
+                    <h3 class="blog-title">${post.title}</h3>
+                    <p class="blog-desc">${post.desc}</p>
+                </div>
+            `;
             blogGrid.appendChild(card);
         });
     }
+
 
     // ==========================================
     // 3. UI LOGIC
