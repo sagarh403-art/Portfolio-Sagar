@@ -1,4 +1,4 @@
-/* VERSION 15.1 STABLE (FIXED) */
+/* VERSION 15.1 STABLE (LOGO FIXED) */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 
@@ -16,7 +16,7 @@
 body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-family: 'Outfit', sans-serif; overflow-x: hidden; }
 
 /* =========================================
-   1. PRELOADER (Lando Norris Style)
+   1. PRELOADER & LOGO
    ========================================= */
 #preloader {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -30,7 +30,6 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 .loader-content { position: relative; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; }
 .loader-logo { width: 80px; height: auto; animation: pulseLogo 2s infinite; }
 
-/* Drawing Lines */
 .line-box { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
 .line-box::before { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: #fff; animation: drawBottomLeft 1.5s ease-in-out forwards; }
 .line-box::after { content: ''; position: absolute; top: 0; right: 0; width: 0; height: 2px; background: #fff; animation: drawTopRight 1.5s ease-in-out forwards; }
@@ -39,20 +38,30 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 @keyframes drawTopRight { 0% { width: 0; height: 2px; box-shadow: inset -2px 0 0 #fff; } 50% { width: 100%; height: 2px; box-shadow: inset -2px 0 0 #fff; } 100% { width: 100%; height: 100%; box-shadow: inset -2px 0 0 #fff; background: transparent; } }
 @keyframes pulseLogo { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(0.95); } }
 
+/* --- LOGO STYLES (Fixed) --- */
+.brand-logo { 
+    position: fixed; 
+    top: 25px; 
+    left: 25px; 
+    z-index: 1001; 
+    display: flex; /* Ensures image container works */
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.brand-logo img { 
+    height: 50px; 
+    width: auto; 
+    display: block; /* Forces image display */
+    filter: drop-shadow(0 0 5px rgba(0,0,0,0.5)); 
+    border: none;
+}
+
+.nav-logo-img { height: 35px; width: auto; display: none; margin-left: auto; }
+
 /* =========================================
-   2. LOGOS (Mobile & Desktop)
-   ========================================= */
-/* Top-Left Mobile Logo */
-.brand-logo { position: fixed; top: 25px; left: 25px; z-index: 1001; display: block; }
-.brand-logo img { height: 50px; width: auto; filter: drop-shadow(0 0 5px rgba(0,0,0,0.5)); }
-
-/* Desktop Pill Logo */
-.nav-logo-img { height: 35px; width: auto; display: none; margin-left: auto; } /* Hidden by default */
-.nav-logo-text { display: none !important; } /* FORCE HIDE ANY TEXT */
-
-
-/* =========================================
-   3. NAVIGATION
+   2. NAVIGATION
    ========================================= */
 .nav-pill {
     position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
@@ -64,7 +73,6 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 .nav-pill a { color: var(--text-main); text-decoration: none; font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
 .nav-pill a:hover { color: var(--accent-orange); }
 
-/* Scrolled State: Show Logo, Hide Links */
 .nav-pill.scrolled { padding: 10px 30px; background: var(--accent-orange); border-color: var(--accent-orange); }
 .nav-pill.scrolled a:not(.nav-logo-img) { display: none; }
 .nav-pill.scrolled .nav-logo-img { display: block; }
@@ -80,7 +88,7 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 .mobile-link { font-family: 'Orbitron'; font-size: 2rem; color: white; text-decoration: none; }
 
 /* =========================================
-   4. HERO SECTION
+   3. HERO SECTION
    ========================================= */
 #canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; opacity: 0.3; pointer-events: none; }
 .hero-section { position: relative; min-height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; padding: 0 5%; z-index: 10; }
@@ -104,7 +112,7 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 .social-links a:hover { color: var(--accent-orange); transform: translateY(-3px); }
 
 /* =========================================
-   5. FAN DECK (FIXED)
+   4. FAN DECK
    ========================================= */
 .fan-section { padding: 100px 0; text-align: center; overflow: hidden; }
 .fan-container { position: relative; height: 400px; display: flex; justify-content: center; align-items: center; margin-top: 50px; perspective: 1000px; }
@@ -120,7 +128,7 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 .fan-card:hover ~ .fan-card { transform: translateX(120px) !important; }
 
 /* =========================================
-   6. GRIDS & LIGHTBOX
+   5. GRIDS & LIGHTBOX
    ========================================= */
 .section { padding: 100px 5%; position: relative; z-index: 20; background: var(--bg-dark); }
 .section-title { font-family: 'Orbitron'; font-size: 3rem; margin-bottom: 20px; }
@@ -135,14 +143,12 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 .location-tag { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(20px); background: rgba(0,0,0,0.7); color: var(--accent-orange); padding: 8px 20px; border-radius: 30px; font-family: 'Orbitron'; font-size: 0.9rem; opacity: 0; transition: 0.4s; pointer-events: none; white-space: nowrap; }
 .gallery-item:hover .location-tag { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-/* Lightbox */
 .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 10000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; pointer-events: none; transition: 0.3s; padding: 20px; }
 .lightbox.active { opacity: 1; visibility: visible; pointer-events: auto; }
 .lightbox img { max-width: 90%; max-height: 90%; border-radius: 5px; box-shadow: 0 0 50px rgba(0,0,0,0.5); transform: scale(0.9); transition: 0.3s; }
 .lightbox.active img { transform: scale(1); }
 .lightbox-close { position: absolute; top: 30px; right: 30px; font-size: 2rem; color: white; cursor: pointer; background: none; border: none; }
 
-/* Blogs */
 .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
 .blog-card { background: var(--bg-card); border-radius: 15px; overflow: hidden; border: 1px solid var(--border); transition: 0.3s; cursor: pointer; text-decoration: none; color: white; display: block; }
 .blog-card:hover { transform: translateY(-10px); border-color: var(--accent-orange); }
@@ -152,7 +158,7 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 .blog-desc { font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; }
 
 /* =========================================
-   7. MOBILE RESPONSIVE
+   6. MOBILE RESPONSIVE
    ========================================= */
 @media (max-width: 900px) {
     .nav-pill { display: none; }
@@ -184,4 +190,4 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
     .fan-card:nth-child(5) { transform: translateX(90px) rotate(15deg); }
     .fan-card:hover { transform: translateY(-40px) scale(1.1) rotate(0deg) !important; }
     .fan-card:hover ~ .fan-card { transform: translateX(70px) !important; }
-                   }
+}
