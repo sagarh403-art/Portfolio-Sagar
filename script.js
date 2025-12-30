@@ -40,7 +40,7 @@ window.onload = () => {
 
         const animate = () => {
             requestAnimationFrame(animate);
-            gridHelper.position.z = (gridHelper.position.z + 0.05) % 5; // Infinite scroll hack
+            gridHelper.position.z = (gridHelper.position.z + 0.05) % 5; 
             renderer.render(scene, camera);
         };
         animate();
@@ -49,34 +49,36 @@ window.onload = () => {
 
     // --- 3. PAGE CONTENT GENERATORS ---
     
-    // A. PHOTOGRAPHY GRID GENERATOR
+    // A. PHOTOGRAPHY GRID GENERATOR (With Locations)
     const photoGrid = document.getElementById('photo-grid');
     if (photoGrid) {
-        // LIST YOUR PHOTO FILENAMES HERE (Put them in 'assets' folder or use links)
+        // ADD YOUR PHOTOS & LOCATIONS HERE
         const myPhotos = [
-            "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80",
-            "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800&q=80",
-            "https://images.unsplash.com/photo-1517404215738-15263e9f9178?w=800&q=80",
-            "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80",
-            // Add more links here...
+            { src: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80", location: "Tokyo, Japan" },
+            { src: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800&q=80", location: "Kyoto Streets" },
+            { src: "https://images.unsplash.com/photo-1517404215738-15263e9f9178?w=800&q=80", location: "Neon City" },
+            { src: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80", location: "Cyberpunk District" },
         ];
 
-        myPhotos.forEach(src => {
+        myPhotos.forEach(photo => {
             const item = document.createElement('div');
             item.className = 'gallery-item';
-            item.innerHTML = `<img src="${src}" loading="lazy">`;
+            // Add image and location tag
+            item.innerHTML = `
+                <img src="${photo.src}" loading="lazy">
+                <div class="location-tag"><i class="fa-solid fa-location-dot"></i> ${photo.location}</div>
+            `;
             photoGrid.appendChild(item);
         });
     }
 
-    // B. BLOG GENERATOR (MANUAL FALLBACK + AUTOMATION READY)
+    // B. BLOG GENERATOR
     const blogGrid = document.getElementById('blog-grid');
     if (blogGrid) {
-        // MANUAL LIST (Safest way)
         const fallbackBlogs = [
-            { title: "Future of UI", desc: "Exploring neon aesthetics.", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600", link: "https://YOUR-BLOG.blogspot.com/p/post1" },
-            { title: "Cyberpunk Art", desc: "Digital revolution.", img: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=600", link: "https://YOUR-BLOG.blogspot.com/p/post2" },
-            { title: "3D Web Design", desc: "Three.js tutorials.", img: "https://images.unsplash.com/photo-1517404215738-15263e9f9178?w=600", link: "https://YOUR-BLOG.blogspot.com/p/post3" }
+            { title: "Future of UI", desc: "Exploring neon aesthetics.", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600", link: "#" },
+            { title: "Cyberpunk Art", desc: "Digital revolution.", img: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=600", link: "#" },
+            { title: "3D Web Design", desc: "Three.js tutorials.", img: "https://images.unsplash.com/photo-1517404215738-15263e9f9178?w=600", link: "#" }
         ];
 
         fallbackBlogs.forEach(post => {
