@@ -1,4 +1,4 @@
-/* VERSION 15.1 STABLE */
+/* VERSION 15.1 STABLE (FIXED) */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 
@@ -16,7 +16,7 @@
 body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-family: 'Outfit', sans-serif; overflow-x: hidden; }
 
 /* =========================================
-   1. PRELOADER & LOGO
+   1. PRELOADER (Lando Norris Style)
    ========================================= */
 #preloader {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -29,6 +29,8 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 
 .loader-content { position: relative; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; }
 .loader-logo { width: 80px; height: auto; animation: pulseLogo 2s infinite; }
+
+/* Drawing Lines */
 .line-box { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
 .line-box::before { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: #fff; animation: drawBottomLeft 1.5s ease-in-out forwards; }
 .line-box::after { content: ''; position: absolute; top: 0; right: 0; width: 0; height: 2px; background: #fff; animation: drawTopRight 1.5s ease-in-out forwards; }
@@ -37,13 +39,20 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 @keyframes drawTopRight { 0% { width: 0; height: 2px; box-shadow: inset -2px 0 0 #fff; } 50% { width: 100%; height: 2px; box-shadow: inset -2px 0 0 #fff; } 100% { width: 100%; height: 100%; box-shadow: inset -2px 0 0 #fff; background: transparent; } }
 @keyframes pulseLogo { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(0.95); } }
 
-/* Logos */
+/* =========================================
+   2. LOGOS (Mobile & Desktop)
+   ========================================= */
+/* Top-Left Mobile Logo */
 .brand-logo { position: fixed; top: 25px; left: 25px; z-index: 1001; display: block; }
 .brand-logo img { height: 50px; width: auto; filter: drop-shadow(0 0 5px rgba(0,0,0,0.5)); }
-.nav-logo-img { height: 35px; width: auto; display: none; }
+
+/* Desktop Pill Logo */
+.nav-logo-img { height: 35px; width: auto; display: none; margin-left: auto; } /* Hidden by default */
+.nav-logo-text { display: none !important; } /* FORCE HIDE ANY TEXT */
+
 
 /* =========================================
-   2. NAVIGATION
+   3. NAVIGATION
    ========================================= */
 .nav-pill {
     position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
@@ -54,6 +63,8 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 }
 .nav-pill a { color: var(--text-main); text-decoration: none; font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
 .nav-pill a:hover { color: var(--accent-orange); }
+
+/* Scrolled State: Show Logo, Hide Links */
 .nav-pill.scrolled { padding: 10px 30px; background: var(--accent-orange); border-color: var(--accent-orange); }
 .nav-pill.scrolled a:not(.nav-logo-img) { display: none; }
 .nav-pill.scrolled .nav-logo-img { display: block; }
@@ -69,7 +80,7 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 .mobile-link { font-family: 'Orbitron'; font-size: 2rem; color: white; text-decoration: none; }
 
 /* =========================================
-   3. HERO SECTION
+   4. HERO SECTION
    ========================================= */
 #canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; opacity: 0.3; pointer-events: none; }
 .hero-section { position: relative; min-height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; padding: 0 5%; z-index: 10; }
@@ -81,7 +92,7 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 
 .hero-right { position: relative; display: flex; justify-content: center; align-items: center; height: 70vh; }
 .hero-img { max-height: 90%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 0 30px rgba(255, 87, 34, 0.3)); mask-image: linear-gradient(to bottom, black 80%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%); }
-.visor-line { display: none; } /* Removed per request */
+.visor-line { display: none; }
 
 .rotate-badge { position: absolute; top: 100px; right: 0; width: 120px; height: 120px; border: 1px dashed var(--accent-orange); border-radius: 50%; display: flex; justify-content: center; align-items: center; animation: spin 10s linear infinite; }
 .rotate-text { font-family: 'Orbitron'; font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 2px; }
@@ -93,34 +104,23 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 .social-links a:hover { color: var(--accent-orange); transform: translateY(-3px); }
 
 /* =========================================
-   4. FAN DECK (FIXED: Push + Pop)
+   5. FAN DECK (FIXED)
    ========================================= */
 .fan-section { padding: 100px 0; text-align: center; overflow: hidden; }
 .fan-container { position: relative; height: 400px; display: flex; justify-content: center; align-items: center; margin-top: 50px; perspective: 1000px; }
+.fan-card { position: absolute; width: 200px; height: 300px; border-radius: 15px; background-size: cover; background-position: center; border: 1px solid var(--border); box-shadow: 0 20px 50px rgba(0,0,0,0.5); transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); transform-origin: bottom center; cursor: pointer; }
 
-.fan-card {
-    position: absolute; width: 200px; height: 300px; border-radius: 15px;
-    background-size: cover; background-position: center; border: 1px solid var(--border); 
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
-    transform-origin: bottom center; cursor: pointer;
-}
-
-/* Base Positions */
 .fan-card:nth-child(1) { transform: translateX(-160px) rotate(-15deg); z-index: 1; }
 .fan-card:nth-child(2) { transform: translateX(-80px) rotate(-7deg); z-index: 2; }
 .fan-card:nth-child(3) { transform: translateX(0px) rotate(0deg) translateY(-10px); z-index: 3; }
 .fan-card:nth-child(4) { transform: translateX(80px) rotate(7deg); z-index: 2; }
 .fan-card:nth-child(5) { transform: translateX(160px) rotate(15deg); z-index: 1; }
 
-/* Hover: Pop Up & Glow */
 .fan-card:hover { z-index: 100 !important; transform: translateY(-80px) scale(1.15) rotate(0deg) !important; box-shadow: 0 0 40px var(--accent-orange); border-color: var(--accent-orange); }
-
-/* Hover: Push Siblings */
 .fan-card:hover ~ .fan-card { transform: translateX(120px) !important; }
 
 /* =========================================
-   5. GRIDS & LIGHTBOX
+   6. GRIDS & LIGHTBOX
    ========================================= */
 .section { padding: 100px 5%; position: relative; z-index: 20; background: var(--bg-dark); }
 .section-title { font-family: 'Orbitron'; font-size: 3rem; margin-bottom: 20px; }
@@ -152,7 +152,7 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
 .blog-desc { font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; }
 
 /* =========================================
-   6. MOBILE RESPONSIVE (Strict)
+   7. MOBILE RESPONSIVE
    ========================================= */
 @media (max-width: 900px) {
     .nav-pill { display: none; }
@@ -175,7 +175,6 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
     
     .rotate-badge { display: none; }
 
-    /* Fan Deck Mobile */
     .fan-container { height: 350px; }
     .fan-card { width: 120px; height: 180px; }
     .fan-card:nth-child(1) { transform: translateX(-90px) rotate(-15deg); }
@@ -183,7 +182,6 @@ body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-fami
     .fan-card:nth-child(3) { transform: translateX(0px) rotate(0deg); }
     .fan-card:nth-child(4) { transform: translateX(45px) rotate(7deg); }
     .fan-card:nth-child(5) { transform: translateX(90px) rotate(15deg); }
-    
     .fan-card:hover { transform: translateY(-40px) scale(1.1) rotate(0deg) !important; }
     .fan-card:hover ~ .fan-card { transform: translateX(70px) !important; }
-}
+                   }
