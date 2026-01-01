@@ -68,20 +68,41 @@ window.onload = () => {
         });
     }
 
-    // C. Blogs
+        // C. Blogs
     const blogGrid = document.getElementById('blog-grid');
     if (blogGrid) {
+        
+        // --- ADD YOUR BLOGGER POSTS HERE ---
         const blogs = [
-            { title: "Future of UI", desc: "Exploring neon aesthetics.", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600", link: "#" },
-            { title: "Cyberpunk Art", desc: "Digital revolution.", img: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=600", link: "#" },
-            { title: "3D Web Design", desc: "Three.js tutorials.", img: "https://images.unsplash.com/photo-1517404215738-15263e9f9178?w=600", link: "#" }
+            { 
+                title: "Hello World: Welcome to My Digital Garden", 
+                desc: "Stepping into the digital universe. A first look at my new journey.", 
+                // Right-click the image on your actual blog -> "Copy Image Address" -> Paste here
+                img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjwDRg-t4MPWaVYbArXVKe2vjzbHxJ4Jl_3b0fLNffbQYYIWX4JA0u1c5iaP2wpCbrYGzrodg2WeNixxwc6OSuFvSs-q6W_ILxksWeEwfPvernKWGwyEPf_Z-tiJ05ZzZUBTXIqrtQBUPQAjwbAQFF3y8Nc6WM72MCysAf7TDBc1dTy2J0ZqkOMMA7NFjON/s3456/1000043079.jpg", 
+                link: "https://sagarh-helloworld.blogspot.com/2025/12/hello-world-welcome-to-my-digital-garden.html" 
+            },
+            
+            // COPY & PASTE THIS BLOCK FOR NEW POSTS:
+            /*
+            { 
+                title: "My Second Blog Post", 
+                desc: "A short summary of what this post is about.", 
+                img: "https://blogger.googleusercontent.com/img/a/...", 
+                link: "https://your-blog.blogspot.com/..." 
+            },
+            */
         ];
+
         blogs.forEach(post => {
-            const card = document.createElement('a'); card.href = post.link; card.target = "_blank"; card.className = 'blog-card';
+            const card = document.createElement('a'); 
+            card.href = post.link; 
+            card.target = "_blank"; 
+            card.className = 'blog-card';
             card.innerHTML = `<img src="${post.img}" class="blog-img"><div class="blog-content"><h3 class="blog-title">${post.title}</h3><p class="blog-desc">${post.desc}</p></div>`;
             blogGrid.appendChild(card);
         });
     }
+
 
     // ==========================================
     // 3. UI LOGIC
