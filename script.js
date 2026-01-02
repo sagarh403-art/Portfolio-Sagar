@@ -83,6 +83,13 @@ window.onload = () => {
             },
             
             // COPY & PASTE THIS BLOCK FOR NEW POSTS:
+            
+            { 
+                title: "Why Are Electronics Getting So Expensive? The Hidden Cost of AI", 
+                desc: "Free AI tools aren't actually free—we are paying for them in hardware costs. With RAM prices set to rise by 20%, the era of cheap memory is over. This blog breaks down the supply chain crisis, the manufacturing hurdles of AI chips, and when this "bubble" might finally burst.", 
+                img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiINy3CFoqB8-qszqrt7BIVmwzSjZEkfkev-w3JOgfK0cn-UH7gAm4OiDz3n8cd014WcwwWvYKcs-8pa2YjftLjGvAiWir-19IfT5sJkJndYvHwvGdUStOGPji9QD7BPzbJ20wL-kaUeEbrV_kmJI8GErOV0-up6jf-CP50bfkgyz9FYOnnCxU8-G8dHDo/s1326/1000049897.jpg", 
+                link: "https://sagarunfiltered-tech.blogspot.com/2026/01/why-are-electronics-getting-so.html?m=1" 
+            },
             /*
             { 
                 title: "My Second Blog Post", 
